@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지금 뭐하지?</title>
+    <style>
+        body {
+            display: grid;
+            grid-template-rows: 1fr 1.5fr 1fr;
+            height: 100vh;
+        }
+        #container {
+            grid-row: 2;
+            align-self: start;
+            justify-self: center;
+        }
+        h1 {
+            font-size: 3rem;
+            color: rgb(26, 188, 156);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        form {
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 7fr 1fr;
+            height: 2.5rem;
+        }
+        input[type="text"] {
+            grid-column: 1/2;
+            border: rgb(26, 188, 156) 2px solid;
+        }
+        input[type="button"] {
+            grid-column: 2/3;
+            color: white;
+            background-color: rgb(26, 188, 156);
+            border: rgb(26, 188, 156) 2px solid;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>지금 뭐하지?</h1>
+        <form action="">
+            
+            <input type="text" placeholder="지금 생각나는 말을 입력하세요.">
+            <input type="button" value="입력" onclick="return newPage()">
+            
+            
+        </form>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
