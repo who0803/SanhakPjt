@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="default.css">
+    <title>지금 뭐하지?</title>
+    <style>
+        body {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .header {
+            grid-row: 1 / 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; 
+            height: 80px;
+            padding: 0 1rem;
+            color: rgb(26, 188, 156);
+        }
+        .header>a {
+            font-size: 2rem;
+            text-decoration: none;
+        }
+        /* menu */
+        .menu {
+            grid-row: 2 / 3;
+            display: flex;
+        }
+        .menu-item {
+            flex-grow: 1; 
+            background: rgb(26, 188, 156);
+            transition: 0.5s;
+        }
+        .menu-item:hover {
+            flex-grow: 1.5; 
+            background: rgb(32, 255, 186);
+            
+        }
+        .menu-link {
+            display: block;
+            padding: 1em;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+        }
+        .menu-link:hover {
+            
+            color: #555;
+        }
+        .primary {
+            display:grid;
+            grid-template-rows: 1fr 2fr;
+            grid-row: 3 / 4;
+            min-height: 80vh;
+	    }
+        .footer {
+            background: lightgray;
+            grid-column: 1 / 4;
+            grid-row: 4 / 5;
+            text-align: center;
+            border-top: 1px lightgray solid;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .slidebox {max-width:1200px;margin:0 auto;position:relative;}
+        .slidebox .slidelist {position:relative;white-space:nowrap;overflow:hidden;}
+        .slidebox .slidelist .slideitem {position:relative;display:inline-flex;vertical-align:middle;background-color:#fff;width:100%;transition:all 1s;}
+        .slidebox .slidelist .slideitem > .movie-box {display:inline-block;width:auto;position:relative;}
+        /*.slidebox .slidelist .slideitem > a img {max-width:100%;}*/
+
+        .slidebox .slide-control [class*="control"] label {position:absolute;z-index:10;top:50%;transform:translateY(-50%);padding:20px;border-radius:50%;cursor:pointer;}
+        .slidebox .slide-control [class*="control"] label.prev {left:-50px;background:#333 url('./img/left-arrow.png') center center / 50% no-repeat;}
+        .slidebox .slide-control [class*="control"] label.next {right:-50px;background:#333 url('./img/right-arrow.png') center center / 50% no-repeat;}
+
+        [name="slide"] {display:none;}
+        #slide01:checked ~ .slidelist .slideitem {left:0;}
+        #slide02:checked ~ .slidelist .slideitem {left:-100%;}
+        #slide03:checked ~ .slidelist .slideitem {left:-200%;}
+        #slide04:checked ~ .slidelist .slideitem {left:-300%;}
+
+        .slide-control [class*="control"] {display:none;}
+        #slide01:checked ~ .slide-control .control01 {display:block;}
+        #slide02:checked ~ .slide-control .control02 {display:block;}
+        #slide03:checked ~ .slide-control .control03 {display:block;}
+        #slide04:checked ~ .slide-control .control04 {display:block;}
+
+        #recommend-message {
+            align-self: end;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .slidebox {
+            align-self: start;
+            justify-self: center;
+        }
+        .slideitem {
+            justify-content: space-evenly;
+        }
+        .movie-box {
+            border: 1px gray solid; 
+            width: 191px !important;    /*아 위에서 width를 오토로 줘서 그러는 구나*/ 
+            height: 272px;
+            background-size: contain !important;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1 class="website-title">지금 뭐하지?</h1>
+        <a href="main.html">🏠</a>
+    </header>
+
+    <ul class="menu">
+        <li class="menu-item">
+            <a href="#" class="menu-link">영화</a>
+        </li>
+        <li class="menu-item">
+            <a href="#" class="menu-link">책</a>
+        </li>
+        <li class="menu-item">
+            <a href="#" class="menu-link">음악</a>
+        </li>
+    </ul>
+
+    <section class="primary">
+        <h1 id="recommend-message">스트레스 확 풀리는 영화들로만 모아봤어요!</h1> <!--값 결과에 따라 바뀔 수 있게-->
+        <div class="slidebox">
+            <input type="radio" name="slide" id="slide01" checked>
+            <input type="radio" name="slide" id="slide02">
+            <input type="radio" name="slide" id="slide03">
+            <input type="radio" name="slide" id="slide04">
+            <ul class="slidelist">
+                <li class="slideitem">
+                    <div class="movie-box" style="background: url(./img/20210328122450.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122507.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122534.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122552.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122615.png);"></div>
+                </li>
+                <li class="slideitem">
+                    <div class="movie-box" style="background: url(./img/20210328122450.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122507.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122534.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122552.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122615.png);"></div>
+                    
+                </li>
+                <li class="slideitem">
+                    <div class="movie-box" style="background: url(./img/20210328122450.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122507.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122534.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122552.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122615.png);"></div>
+                   
+                </li>
+                <li class="slideitem">
+                    <div class="movie-box" style="background: url(./img/20210328122450.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122507.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122534.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122552.png);"></div>
+                    <div class="movie-box" style="background: url(./img/20210328122615.png);"></div>
+                </li>
+                
+            </ul>
+            <div class="slide-control">
+                <div class="control01">
+                    <label for="slide04" class="prev"></label>
+                    <label for="slide02" class="next"></label>
+                </div>
+                <div class="control02">
+                    <label for="slide01" class="prev"></label>
+                    <label for="slide03" class="next"></label>
+                </div>
+                <div class="control03">
+                    <label for="slide02" class="prev"></label>
+                    <label for="slide04" class="next"></label>
+                </div>
+                <div class="control04">
+                    <label for="slide03" class="prev"></label>
+                    <label for="slide01" class="next"></label>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        산학프로젝트 8조 지금 뭐하지? <br>
+        팀장: 성우진 조원: 김혜영, 양아림, 박범준, 김현진
+    </footer>
+</body>
+</html>

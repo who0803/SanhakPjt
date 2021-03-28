@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지금 뭐하지?</title>
+    <style>
+        body {
+            display: grid;
+            grid-template-columns: 35% 1fr 35%;
+            height: 100vh;
+        }
+        #container {
+            margin-top: 2rem;
+            text-align: center;
+            grid-column: 2;
+            align-self: start;
+            justify-self: center;
+        }
+        #seletion-parent {
+            display: grid;
+            grid-auto-rows: 1fr 1fr 1fr 1fr 1fr;
+            row-gap: 1rem;
+            
+        }
+        .seletion {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border: lightgray 1px solid;
+            background: lightgray;
+            border-radius: 1rem;
+
+        }
+        h1 {
+            font-size: 4rem;
+            color: rgb(26, 188, 156);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        #felling {
+            color: rgb(26, 188, 156);
+        }
+        p {
+            font-weight: 900;
+        }
+        #selectText {
+            margin-bottom: 0;
+        }
+        #max3 {
+            margin-top: 0;
+        }
+        input[type="button"] {
+            width: 40%;
+            height: 2.5rem;
+            color: white;
+            background-color: rgb(32, 188, 156);
+            border: rgb(26, 188, 156) 2px solid;
+            border-radius: 1rem;
+            margin-top: 1rem;
+        }
+        input[type="button"]:hover {
+            z-index: 1;
+	        transform: scale(1.1);
+            opacity: 0.7;   /*1이 투명*/
+            background: rgb(32, 255, 186);
+            border: rgb(32, 255, 186) 2px solid;
+        }
+        /*//////////////////////////////////////////*/
+        .active {
+            background: rgb(26, 188, 156); 
+            border: rgb(26, 188, 156) 2px solid;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>지금 뭐하지?</h1>
+        <h2>지금 <span id="felling">______</span> 기분인 것 같아요.</h2>
+        <p id="selectText">도움되는 컨텐츠를 추천하기 위해서 <br>아래의 선택지 중 공감되는 말을 선택해주세요.</p>
+        <p id="max3">(최대 3개)</p>
+        <div class="seletion-parent">
+            <div id="s1" class="seletion">empty</div>
+            <div id="s2" class="seletion">empty</div>
+            <div id="s3" class="seletion">empty</div>
+            <div id="s4" class="seletion">empty</div>
+            <div id="s5" class="seletion">empty</div>
+        </div>
+        
+        <input type="button" value="추천받기" onclick="return newPage()">
+    </div> 
+    <script src="1.js"></script>
+</body>
+</html>
