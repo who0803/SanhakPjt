@@ -110,6 +110,47 @@
             height: 272px;
             background-size: contain !important;
         }
+
+
+
+        /* modal */
+        .modal {
+            display: none;
+            /*가운데 정렬*/
+            justify-content: center;
+            align-items: center;
+            
+            /*고정되면서 전체 차지*/
+            position: fixed;
+            left: 0;	
+            right: 0;
+            top: 0;
+            bottom: 0;
+            
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .dialog {
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            width: 50vw;	/*부모의 절반정도*/
+            padding: 2em;
+            border-radius: 1em;
+            background: white;
+        }
+        #img {  /*모달박스 안 이미지*/
+            border: 1px gray solid; 
+            width: 191px !important;    /*아 위에서 width를 오토로 줘서 그러는 구나*/ 
+            height: 272px;
+            background-size: contain !important;
+            margin: 2rem 0;
+        }
+        #closeBtn {
+            align-self: flex-end;
+            font-size: 2rem;
+        }
     </style>
 </head>
 <body>
@@ -195,5 +236,34 @@
         산학프로젝트 8조 지금 뭐하지? <br>
         팀장: 성우진 조원: 김혜영, 양아림, 박범준, 김현진
     </footer>
+
+    <!--모달-->
+    <div class="modal">
+		<div class="dialog">
+            <button type="button" id="closeBtn">☒</button>
+			<h1 id="title">컨텐츠 제목</h1>
+            <figure id="img" style="background: url(./img/20210328122450.png);"></figure>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente sunt, aut veritatis nesciunt qui voluptas excepturi inventore vitae necessitatibus nostrum quos, enim distinctio iusto itaque non similique sequi repellat vel?
+            </p>
+		</div>
+	</div>
+
+    <script>
+        const contentBox = document.querySelector('.movie-box'); 
+        // 모달
+        let modal = document.querySelector('.modal');
+        const closeBtn = document.querySelector('#closeBtn');
+
+
+        contentBox.addEventListener('click', function() {
+            modal.style.display = 'flex';
+        });
+
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+    </script>
 </body>
 </html>

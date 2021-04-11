@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="default.css">
+    <title>Document</title>
+    <style>
+        .login-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+        }
+        h1 {
+            margin-top: 2rem;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: rgb(26, 188, 156);
+        }
+        form {
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            
+            
+            height: 80%;
+            min-width: 30%;
+        }
+        .in {
+            border: 2px solid rgb(26, 188, 156);
+            display: block;
+            width: 100%;
+            height: 5%;
+            margin-bottom: 1rem;
+        }
+        label {
+            margin-bottom: 0.5rem;
+        }
+        .message {
+            margin-top: -0.5rem;
+            margin-bottom: 0.5rem;
+            color: red;
+        }
+
+        /*버튼*/
+        #btn {
+            position: relative;
+            width: 100%;
+            height: 8%;
+            margin-bottom: 1rem;
+        }
+        .btnJoin {
+            position:absolute;
+            top:0;
+            left:0;
+            width: 100%;
+            height: 100%;
+        }
+        button[type="button"] {
+            display: block;
+            z-index: 1;
+            font-size: 1rem;
+            color: white;
+            background: rgb(26, 188, 156);
+            border: none;
+            border-radius: 1rem;
+        }
+        input[type="submit"] {
+            opacity: 0;
+        }
+
+        /* modal */
+        .modal {
+            display: none;
+            /*가운데 정렬*/
+            justify-content: center;
+            align-items: center;
+            
+            /*고정되면서 전체 차지*/
+            position: fixed;
+            left: 0;	
+            right: 0;
+            top: 0;
+            bottom: 0;
+            
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .dialog {
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            width: 50vw;	/*부모의 절반정도*/
+            padding: 2em;
+            border-radius: 1em;
+            background: white;
+        }
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        #modalBtn {
+            width: 20%;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <header>
+            <h1>지금 뭐하지?</h1>
+        </header>
+        
+        <form action="login.html">
+            <label for="id-txt">아이디<br></label>
+            <input type="text" id="id-txt" class="in" name="id" autofocus>
+            <div id="idMessage" class="message"></div>
+
+            <label for="password">비밀번호<br></label>
+            <input type="password" id="password" class="in" name="pwd">
+            <div id="pwMessage" class="message"></div>
+
+            <label for="CheckPW">비밀번호 재확인<br></label>
+            <input type="password" id="CheckPW" class="in checkPW">
+            <div id="pwErrMessage" class="message"></div>
+
+            <label for="date">생년월일<br></label>
+            <input type="date" id="date" name="datev" class="in"><!--년월일 입력-->
+            <div id="dateMessage" class="message"></div>
+
+            <label for="gender">성별<br></label>
+            <select name="gender" id="gender" class="in">
+                <option value selected>성별</option>
+                <option value="M">남자</option>
+                <option value="W">여자</option>
+            </select>
+            <div id="genderMessage" class="message"></div>
+
+            <div id="btn">
+                <button type="button" id="fakeBtn" class="btnJoin">가입하기</button>
+                <input type="submit" value=" Sign in" id="realBtn" class="btnJoin">
+            </div>
+        </form>
+    </div>
+
+    <!--모달-->
+    <div class="modal">
+		<div class="dialog">
+			<p>회원가입이 완료되었습니다.</p>
+            <button type="button" id="modalBtn">확인</button>
+		</div>
+	</div>
+    <script>
+
+        // 인풋태그
+        let tagArr = [];
+        const password = document.querySelector('#password');
+        const CheckPW = document.querySelector('#CheckPW');
+        const idTxt = document.querySelector('#id-txt');
+        const date = document.querySelector('#date');
+        const gender = document.querySelector('#gender');
+        tagArr[0] = idTxt;
+        tagArr[1] = password;
+        tagArr[2] = CheckPW;
+        tagArr[3] = date;
+        tagArr[4] = gender;
+
+        // 메시지
+        let messageArr = [];
+        const idMessage = document.querySelector('#idMessage');
+        const pwMessage = document.querySelector('#pwMessage');
+        const pwErrMessage = document.querySelector('#pwErrMessage');
+        const dateMessage = document.querySelector('#dateMessage');
+        const genderMessage = document.querySelector('#genderMessage');
+        messageArr[0] = idMessage;
+        messageArr[1] = pwMessage;
+        messageArr[2] = pwErrMessage;
+        messageArr[3] = dateMessage;
+        messageArr[4] = genderMessage;
+
+        // 버튼
+        const btn = document.querySelector('#fakeBtn');
+        const realBtn = document.querySelector('#realBtn');
+
+        // 모달
+        let modal = document.querySelector('.modal');
+        const modalBtn = document.querySelector('#modalBtn');
+
+        // 가입하기 버튼 이벤트
+        btn.addEventListener('click', function() {
+            console.log(password.value);
+            console.log(CheckPW.value);
+            
+            //비번 입력한게 다르면
+            if(password.value !== CheckPW.value) {  
+                pwErrMessage.innerHTML = "비밀번호가 일치하지 않습니다.";
+                console.log("뭐고1");
+            }
+            else {
+                console.log("뭐고2");
+                pwErrMessage.innerHTML = "";
+            }
+            
+
+            // 입력 유무 판단
+            for (let i = 0; i < tagArr.length; i++) {
+
+                if(tagArr[i].value === "") {
+                    messageArr[i].innerHTML = "필수 정보입니다.";
+                }
+                else {
+                    if (messageArr[i].textContent !== "비밀번호가 일치하지 않습니다.") {
+                        messageArr[i].innerHTML = "";
+                    }
+                }
+            }
+
+            // 모든 에러 메시지가 비어있을 경우
+            let flag = 0;
+            for (let i = 0; i < messageArr.length; i++) {
+                
+                if(messageArr[i].textContent === "") {
+                    flag++;  
+                } 
+                if (flag === 5) {
+                    modal.style.display = "flex";// 모달창 띄우기
+                }
+            }
+        });//
+
+        // 모달 버튼
+        modalBtn.addEventListener('click', function() {
+            modal.style.display = "none";
+            realBtn.click();
+        });
+
+
+        fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/users", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            "username" : idTxt.value
+        }),
+        })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+    </script>
+</body>
+</html>
