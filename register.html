@@ -271,19 +271,10 @@
         // 아이디 중복 검사
         idCheck.addEventListener('click', function() {
             if(idTxt.value !== '') {
-                fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/users", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*",
-                    },
-                    body: JSON.stringify({
-                        "username" : idTxt.value
-                    }),
-                })
+                fetch(`https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/username/${idTxt.value}`)
                     .then((response) => response.json())
                     //.then(idMessage.innerHTML= '사용가능한 아이디입니다.')
-                    .then((data) => console.log(data.body.message))
+                    .then((data) => idMessage.innerHTML = data.body.message)
             }
             else idMessage.innerHTML= '아이디를 입력해주세요.'
 
