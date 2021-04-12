@@ -134,8 +134,8 @@
             <h1>지금 뭐하지?</h1>
         </header>
         
-        <form action="login.html">
-            <label for="id-txt">아이디(중복확인을 해주세요.)<br></label>
+        <form action="login.html" method="POST">
+            <label for="id-txt">아이디(중복검사를 해주세요.)<br></label>
             <div id="idBox">
                 <input type="text" id="id-txt" class="in" name="id" autofocus>
                 <button type="button" id="idBtn">검사</button>
@@ -151,9 +151,11 @@
             <input type="password" id="CheckPW" class="in checkPW">
             <div id="pwErrMessage" class="message"></div>
 
-            <label for="date">생년월일<br></label>
-            <input type="date" id="date" name="datev" class="in"><!--년월일 입력-->
-            <div id="dateMessage" class="message"></div>
+            <label for="age">나이<br></label>
+            <select name="age" id="age" class="in">
+                <option value selected>나이</option>
+            </select>
+            <div id="ageMessage" class="message"></div>
 
             <label for="gender">성별<br></label>
             <select name="gender" id="gender" class="in">
@@ -173,7 +175,7 @@
     <!--모달-->
     <div class="modal">
 		<div class="dialog">
-			<p>회원가입이 완료되었습니다.</p>
+			<p></p>
             <button type="button" id="modalBtn">확인</button>
 		</div>
 	</div>
@@ -184,25 +186,33 @@
         const password = document.querySelector('#password');
         const CheckPW = document.querySelector('#CheckPW');
         const idTxt = document.querySelector('#id-txt');
-        const date = document.querySelector('#date');
+        const age = document.querySelector('#age');
         const gender = document.querySelector('#gender');
         tagArr[0] = idTxt;
         tagArr[1] = password;
         tagArr[2] = CheckPW;
-        tagArr[3] = date;
+        tagArr[3] = age;
         tagArr[4] = gender;
+
+        // 나이 1 ~ 100까지 동적으로 생성
+        for (let i = 1; i <= 100; i++) {
+            const newAge = document.createElement('option');
+            newAge.setAttribute('value', i);
+            newAge.textContent = i;
+            age.appendChild(newAge);
+        }
 
         // 메시지
         let messageArr = [];
         const idMessage = document.querySelector('#idMessage');
         const pwMessage = document.querySelector('#pwMessage');
         const pwErrMessage = document.querySelector('#pwErrMessage');
-        const dateMessage = document.querySelector('#dateMessage');
+        const ageMessage = document.querySelector('#ageMessage');
         const genderMessage = document.querySelector('#genderMessage');
         messageArr[0] = idMessage;
         messageArr[1] = pwMessage;
         messageArr[2] = pwErrMessage;
-        messageArr[3] = dateMessage;
+        messageArr[3] = ageMessage;
         messageArr[4] = genderMessage;
 
         // 버튼
@@ -212,10 +222,11 @@
         // 모달
         let modal = document.querySelector('.modal');
         const modalBtn = document.querySelector('#modalBtn');
+        let modalMessage = document.querySelector('.modal p');
 
         // 중복확인
         const idCheck = document.querySelector('#idBtn');
-
+        let checkedId;
 
         // 가입하기 버튼 이벤트
         btn.addEventListener('click', function() {
@@ -246,6 +257,14 @@
                 }
             }
 
+
+            // 중복체크 유무 확인
+            if (checkedId !== idTxt.value && idTxt.value !== "") {
+                idMessage.innerHTML = "중복검사를 해주세요.";
+            }
+            else if (idTxt.value === "");   // 입력한게 없는 경우는 필수 정보입니다.
+
+
             // 모든 에러 메시지가 비어있을 경우
             let flag = 0;
             for (let i = 0; i < messageArr.length; i++) {
@@ -254,6 +273,22 @@
                     flag++;  
                 } 
                 if (flag === 5) {
+                    console.log(idTxt.value, password.value, gender.value, age.value)
+                   
+                    fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/users", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            "username": idTxt.value,
+                            "password": password.value,
+                            "gender": gender.value,
+                            "age": age.value
+                        }),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => modalMessage.innerHTML = data.body.message)
                     modal.style.display = "flex";// 모달창 띄우기
                 }
             }
@@ -273,11 +308,19 @@
             if(idTxt.value !== '') {
                 fetch(`https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/username/${idTxt.value}`)
                     .then((response) => response.json())
-                    .then((data) => console.log('data.body.message'))
-                    //.then((data) => idMessage.innerHTML = data.body.message)
+                    //.then((data) => console.log(data.body.message))
+                    .then((data) => {
+                        idMessage.innerHTML = data.body.message
+
+                        // 중복검사 눌렀을 때 사용가능한 아이디면 저장해둠
+                        if (data.body.message !== '이미 존재하는 아이디 입니다.') {
+                            checkedId = idTxt.value;
+                        }
+                    })
             }
             else idMessage.innerHTML= '아이디를 입력해주세요.'
 
+            
         });
 
 

@@ -1,57 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>지금 뭐하지?</title>
     <style>
-        body {
-            display: grid;
-            grid-template-rows: 1fr 1.5fr 1fr;
+        .body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
         }
+
         #container {
-            grid-row: 2;
-            align-self: start;
-            justify-self: center;
+            display: flex;
+            flex-direction: column;
+            margin-top: -10%;
+            width: 40%;
         }
+
         h1 {
             font-size: 3rem;
             color: rgb(26, 188, 156);
             text-align: center;
             margin-bottom: 15px;
         }
+
         form {
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 7fr 1fr;
-            height: 2.5rem;
+            display: flex;
+            height: 3rem;
         }
-        input[type="text"] {
-            grid-column: 1/2;
+
+        #text {
+            width: 90%;
             border: rgb(26, 188, 156) 2px solid;
         }
-        input[type="button"] {
-            grid-column: 2/3;
+
+        #btn {
+            position: relative;
+            width: 10%;
             color: white;
-            background-color: rgb(26, 188, 156);
-            border: rgb(26, 188, 156) 2px solid;
+        }
+
+        .btnJoin {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        button[type="button"] {
+            display: block;
+            z-index: 1;
+            color: white;
+            font-size: 1rem;
+            background: rgb(26, 188, 156);
+            border: none;
+        }
+
+        input[type="submit"] {
+            opacity: 0;
+        }
+
+        .message{
+            color: red;
+            text-align:center;
+        }
+        /*///////////////////////////////////////////*/
+        #doorTitle {
+            font-size: 1.5rem;
+            margin-top: 4rem;
+            margin-bottom: 1rem;
+            color:rgb(26, 188, 156);
+            font-weight: bolder;
+        }
+        .stage {	/*배경*/
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 200px;	
+			height: 150px;
+		}
+		.door {
+			position: relative;	/*기준점이 되도록*/
+			width: 100px;
+			height: 150px;
+		}
+		.door-back {	/*일분이 나오는 입구*/ 
+            box-sizing: border-box;
+			overflow: hidden;	/*일분이 밖으로 나가도 안보이게*/
+			position: absolute;	/*겹치게*/
+			left: 0;	
+			top: 0;
+			width: 100%;	/*부모크기 꽉 채우겠다*/
+			height: 100%;
+			background: rgb(26, 188, 156);
+            border: 5px black solid;
+		}
+		.ilbuni {
+			position: absolute;
+			left: 0;	/*위치는 왼쪽 아래기준*/
+			bottom: 0;
+			width: 100px;	/*일분이 크기 고정*/
+			height: 100px;
+			background-repeat: no-repeat;
+			background-position: 50% 100%;	/*백그라운드 이미지 위치는 가운데 아래 center bottom*/
+			background-size: contain;
+
+			/*transform에서 3d가 붙은 애들은 하드웨어 가속을 함. translate3d쓰면 퍼포먼스 향상시킴*/
+			/*translate 쓸 때 %를 쓰면 편하다. 오브젝트(ilbuni)의 크기를 100%로 잡는다*/
+			transform: translate3d(100%, 0, 0);	/*처음에는 아예 안보이는 상태*/
+			transition: 0.5s 0.5s;				/*duration  delay*/
+		}
+		/*이미지 넣어줌*/
+		.door:nth-child(1) .ilbuni { background-image: url(img/book.png); }	
+		.door:nth-child(2) .ilbuni { background-image: url(img/movie.png); }
+		.door-body {	/*문*/
+			position: absolute;	/*문 겹침*/
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			transition: 0.5s;		/*문열리는 속도*/
+			transform-origin: 0%;	/*기준점은 문 맨왼쪽*/
+			cursor: pointer;
+		}
+		.door:nth-child(1) .door-body { 
+            position: relative;
+            background-image: url(img/door.png); 
+            background-repeat: no-repeat;
+            background-size: 230px 190px;;
+            background-position: -65px -20px;
+        }	
+		.door:nth-child(2) .door-body { 
+            position: relative;
+            background-image: url(img/door.png); 
+            background-repeat: no-repeat;
+            background-size: 230px 190px;;
+            background-position: -66px -20px;
+        }
+		.door-opened .door-body {	/* 문 열림 */
+			transform: perspective(800px) rotateY(-110deg);		/*transform안에 쓰면 시점 차이가 없다. -인 이유는 문을 당기는 거라서*/
+		}
+		.door-opened .ilbuni {
+			transform: translate3d(0, 0, 0);	/*문열리면 일분이 나타남*/
+		}
+        #contentName {
+            position:absolute;
+            left: 20%;
+            top: 25%;
+            font-size: 20px;
+            font-weight: bolder;
         }
     </style>
 </head>
+
 <body>
-    <div id="container">
-        <h1>지금 뭐하지?</h1>
-        <form action="">
-            
-            <input type="text" placeholder="지금 생각나는 말을 입력하세요.">
-            <input type="button" value="입력" onclick="return newPage()">
-            
-            
-        </form>
+    <div class="body">
+        <div id="container">
+            <h1>지금 뭐하지?</h1>
+            <form action="1.html" method="POST">
+                <input type="text" id="text" placeholder="지금 생각나는 말을 입력하세요." autofocus>
+                <div id="btn">
+                    <button type="button" id="fakeBtn" class="btnJoin">입력</button>
+                    <input type="submit" id="realBtn" value="입력" class="btnJoin">
+                </div>
+            </form>
+            <div id="textMessage" class="message"></div>
+        </div>
+
+        <!--문-->
+        <div id="doorTitle">원하시는 컨텐츠를 선택해주세요!</div>
+        <div class="stage">
+            <div class="door" data-value="book">
+                <div class="door-back">
+                    <div class="ilbuni"></div>
+                </div>
+                <div class="door-body"><div id="contentName">Book</div></div>
+            </div>
+            <div class="door" data-value="movie">
+                <div class="door-back">
+                    <div class="ilbuni"></div>
+                </div>
+                <div class="door-body"><div id="contentName">Movie</div></div>
+            </div>
+        </div>
+        <div id="selectMessage" class="message"></div>
     </div>
     <a href="login.html">login</a>
-    <script src="main.js"></script>
-</body>
+
+    <script>
+        const btn = document.querySelector('#fakeBtn');
+        const realBtn = document.querySelector('#realBtn');
+        let text = document.querySelector('#text');
+        let textMessage = document.querySelector('#textMessage');   // 아무글도 입력안했을 때
+        let selectMessage = document.querySelector('#selectMessage');   // 아무 문도 선택안했을 때
+
+        // 문
+        const stageElem = document.querySelector('.stage');	// 부모태그
+        // 현재 활성화된 아이템을 저장
+        let currentItem;	// 공유되는 변수// door
+
+
+
+        // 문 이벤트//////////
+        // 활성화
+        function activate(elem) {
+            elem.classList.add('door-opened');
+            currentItem = elem;	// 열린거 갱신해줘야함
+        }
+
+        // 비활성화
+        function inactivate(elem) {
+            elem.classList.remove('door-opened');
+        }
+
+        function doorHandler(e) {	// EventListener로 실행이 되면 자동으로 첫번째 매개변수 자리에는 이벤트라는 특별한 객체 들어옴
+            const targetElem = e.target;	// 클릭한 거
+            console.log(targetElem);
+            if (currentItem) {	// 활성화된 것이 뭐라도 있으면
+                inactivate(currentItem);	// 비활성화 시키고
+            }
+
+            // 아 열린문을 눌렀을 때 닫히기만 하는 이유는 누른게 door-body가 아니고 door-back이나 일분이이기 때문에
+            if (targetElem.classList.contains('door-body')) {	// 클릭한 것이 문일 때만 문 활성화시킨다
+                activate(targetElem.parentNode);// 클릭한 door-body가 아니고 부모태그인 door에 door-opened가 붙어야함
+                selectMessage.innerHTML = '';
+            }
+        }
+
+        stageElem.addEventListener('click', doorHandler);
+
+
+
+
+
+        // 검색버튼
+        btn.addEventListener('click', function () {
+            if (text.value === '') { // 아무것도 안입력했으면
+                textMessage.innerHTML = '지금 생각나는 말을 입력해주세요!';
+            }
+            else textMessage.innerHTML = '';
+
+
+            // 문활성화 된것이 없다는 메시지 
+            if(!currentItem) {// 처음에 활성화된 것이 없으면
+                selectMessage.innerHTML = '컨텐츠를 선택해주세요';
+            }
+            else if(!currentItem.classList.contains('door-opened')) {
+                    selectMessage.innerHTML = '컨텐츠를 선택해주세요';
+            }
+            
+
+            if(textMessage.textContent === '' && selectMessage.textContent === '') {    // 텍스트도 입력받았고 컨텐츠도 선택했다면
+                fetch("https://jsonplaceholder.typicode.com/posts", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        "sentence": text.value, // 사용자가 입력한 문장
+                        "type": currentItem.dataset.value,  // 활성화된 문의 정보
+                        "userId": "userId"  //이거 어떻게 해?
+                    }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => console.log(data))
+                    
+                    realBtn.click();
+            }
+        });
+
+
+
+
+    </script>
+    </body>
+
 </html>
