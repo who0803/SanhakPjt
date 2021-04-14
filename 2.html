@@ -7,110 +7,113 @@
     <link rel="stylesheet" href="default.css">
     <title>지금 뭐하지?</title>
     <style>
-        body {
-            display: grid;
-            grid-template-columns: 1fr;
+        #body {
+            display: flex;
+            flex-direction: column;
+            
+        }
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90px;
+            border-bottom: 2px rgb(26, 188, 156) solid;
+            margin-bottom: 5rem;
+        }
+        .website-title {
+            color: rgb(26, 188, 156);
+            font-size: 40px;
+            cursor: pointer;
+        }
+        #textContainer {
+            align-self: center;
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .header {
-            grid-row: 1 / 2;
-            display: flex;
-            align-items: center;
-            justify-content: space-between; 
-            height: 80px;
-            padding: 0 1rem;
-            color: rgb(26, 188, 156);
-        }
-        .header>a {
-            font-size: 2rem;
-            text-decoration: none;
-        }
-        /* menu */
-        .menu {
-            grid-row: 2 / 3;
-            display: flex;
-        }
-        .menu-item {
-            flex-grow: 1; 
-            background: rgb(26, 188, 156);
-            transition: 0.5s;
-        }
-        .menu-item:hover {
-            flex-grow: 1.5; 
-            background: rgb(32, 255, 186);
-            
-        }
-        .menu-link {
-            display: block;
-            padding: 1em;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-            text-align: center;
-        }
-        .menu-link:hover {
-            
-            color: #555;
-        }
-        .primary {
-            display:grid;
-            grid-template-rows: 1fr 2fr;
-            grid-row: 3 / 4;
-            min-height: 80vh;
-	    }
         .footer {
-            background: lightgray;
-            grid-column: 1 / 4;
-            grid-row: 4 / 5;
+            background: rgb(238, 237, 237);
             text-align: center;
             border-top: 1px lightgray solid;
             padding-top: 1rem;
             padding-bottom: 1rem;
+            margin-top: 100px;
         }
 
-        .slidebox {max-width:1200px;margin:0 auto;position:relative;}
-        .slidebox .slidelist {position:relative;white-space:nowrap;overflow:hidden;}
-        .slidebox .slidelist .slideitem {position:relative;display:inline-flex;vertical-align:middle;background-color:#fff;width:100%;transition:all 1s;}
-        .slidebox .slidelist .slideitem > .movie-box {display:inline-block;width:auto;position:relative;}
-        /*.slidebox .slidelist .slideitem > a img {max-width:100%;}*/
-
-        .slidebox .slide-control [class*="control"] label {position:absolute;z-index:10;top:50%;transform:translateY(-50%);padding:20px;border-radius:50%;cursor:pointer;}
-        .slidebox .slide-control [class*="control"] label.prev {left:-50px;background:#333 url('./img/left-arrow.png') center center / 50% no-repeat;}
-        .slidebox .slide-control [class*="control"] label.next {right:-50px;background:#333 url('./img/right-arrow.png') center center / 50% no-repeat;}
-
-        [name="slide"] {display:none;}
-        #slide01:checked ~ .slidelist .slideitem {left:0;}
-        #slide02:checked ~ .slidelist .slideitem {left:-100%;}
-        #slide03:checked ~ .slidelist .slideitem {left:-200%;}
-        #slide04:checked ~ .slidelist .slideitem {left:-300%;}
-
-        .slide-control [class*="control"] {display:none;}
-        #slide01:checked ~ .slide-control .control01 {display:block;}
-        #slide02:checked ~ .slide-control .control02 {display:block;}
-        #slide03:checked ~ .slide-control .control03 {display:block;}
-        #slide04:checked ~ .slide-control .control04 {display:block;}
-
-        #recommend-message {
-            align-self: end;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
+        #contentContainer {
+            display: flex;
+            flex-direction: column;
+            max-width: 1100px;
+            min-width: 1100px;
+            align-self: center;
         }
-        .slidebox {
-            align-self: start;
-            justify-self: center;
+        #recommendMessage {
+            font-size: 35px;
+            font-weight: bolder;
+            margin-bottom: 1rem;
         }
-        .slideitem {
+        #btn {
+            background: rgb(26, 188, 156);
+            color: white;
+            border: none;
+            height: 3rem;
+            cursor: pointer;
+        }
+        #contentTable {
+            display: flex;
+            flex-direction: column;
+        }
+        .row {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
             justify-content: space-evenly;
+            /*border: 1px gray solid;*/
         }
-        .movie-box {
-            border: 1px gray solid; 
-            width: 191px !important;    /*아 위에서 width를 오토로 줘서 그러는 구나*/ 
-            height: 272px;
-            background-size: contain !important;
+        .content {
+            flex-shrink: 0;
+            width: 230px;
+            height: 420px;
+            /*border: 1px gray solid;*/
+            display: flex;
+            flex-direction: column;
         }
-
+        .contentImg {
+            box-sizing: border-box;
+            width: 230px;
+            height: 331px;
+            border: 1px gray solid;
+            background-size: contain;
+        }
+        .contentInfo {
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            width: 100%;
+            height: 89px;
+            border: 1px gray solid;
+        }
+        .contentTitle {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+            height: 50%;
+            font-size: 20px;
+            font-weight: bolder;
+            padding-top: 10px;
+            padding-left: 5px;
+        }
+        .evaluationBox {
+            width: 100%;
+            height: 50%;
+        }
+        .unvisibleMode {
+            display: none;
+        }
 
 
         /* modal */
@@ -129,135 +132,230 @@
             
             background: rgba(0, 0, 0, 0.3);
         }
-        .dialog {
+        .modalDialog {
             display:flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
 
-            width: 50vw;	/*부모의 절반정도*/
+            width: 90vw;	/*화면 절반정도*/
             padding: 2em;
             border-radius: 1em;
             background: white;
         }
-        #img {  /*모달박스 안 이미지*/
+        #modalImg {  /*모달박스 안 이미지*/
             border: 1px gray solid; 
-            width: 191px !important;    /*아 위에서 width를 오토로 줘서 그러는 구나*/ 
+            width: 191px;    
             height: 272px;
-            background-size: contain !important;
+            background-size: contain;
             margin: 2rem 0;
         }
-        #closeBtn {
+        #modalCloseBtn {
             align-self: flex-end;
             font-size: 2rem;
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <h1 class="website-title">지금 뭐하지?</h1>
-        <a href="index.html">🏠</a>
-    </header>
-
-    <ul class="menu">
-        <li class="menu-item">
-            <a href="#" class="menu-link">영화</a>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">책</a>
-        </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">음악</a>
-        </li>
-    </ul>
-
-    <section class="primary">
-        <h1 id="recommend-message">스트레스 확 풀리는 영화들로만 모아봤어요!</h1> <!--값 결과에 따라 바뀔 수 있게-->
-        <div class="slidebox">
-            <input type="radio" name="slide" id="slide01" checked>
-            <input type="radio" name="slide" id="slide02">
-            <input type="radio" name="slide" id="slide03">
-            <input type="radio" name="slide" id="slide04">
-            <ul class="slidelist">
-                <li class="slideitem">
-                    <div class="movie-box" style="background: url(./img/20210328122450.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122507.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122534.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122552.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122615.png);"></div>
-                </li>
-                <li class="slideitem">
-                    <div class="movie-box" style="background: url(./img/20210328122450.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122507.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122534.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122552.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122615.png);"></div>
-                    
-                </li>
-                <li class="slideitem">
-                    <div class="movie-box" style="background: url(./img/20210328122450.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122507.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122534.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122552.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122615.png);"></div>
-                   
-                </li>
-                <li class="slideitem">
-                    <div class="movie-box" style="background: url(./img/20210328122450.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122507.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122534.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122552.png);"></div>
-                    <div class="movie-box" style="background: url(./img/20210328122615.png);"></div>
-                </li>
-                
-            </ul>
-            <div class="slide-control">
-                <div class="control01">
-                    <label for="slide04" class="prev"></label>
-                    <label for="slide02" class="next"></label>
-                </div>
-                <div class="control02">
-                    <label for="slide01" class="prev"></label>
-                    <label for="slide03" class="next"></label>
-                </div>
-                <div class="control03">
-                    <label for="slide02" class="prev"></label>
-                    <label for="slide04" class="next"></label>
-                </div>
-                <div class="control04">
-                    <label for="slide03" class="prev"></label>
-                    <label for="slide01" class="next"></label>
-                </div>
-            </div>
+    <div id="body">
+        <header class="header">
+            <h1 class="website-title" onclick="location.href = 'index.html'">지금 뭐하지?</h1>
+        </header>
+        <div id="textContainer">
+            <div id="recommendMessage">이런 영화 어떠세요?</div>  <!--여기도 영화면 영화 책이면 책 동적으로 넣기-->
+            <div id="contentNum"></div><!--몇개의 영화가 추천되었습니다.-->
         </div>
-    </section>
+        <div id="contentContainer">
+            <div id="contentTable"></div>
+            <button id="btn">더보기 ⇩</button>
+        </div>
+        
+        <footer class="footer">
+            산학프로젝트 8조 지금 뭐하지? <br>
+            팀장: 성우진 조원: 김혜영, 양아림, 박범준, 김현진
+        </footer>
+    </div>
     
-    <footer class="footer">
-        산학프로젝트 8조 지금 뭐하지? <br>
-        팀장: 성우진 조원: 김혜영, 양아림, 박범준, 김현진
-    </footer>
 
     <!--모달-->
     <div class="modal">
-		<div class="dialog">
-            <button type="button" id="closeBtn">☒</button>
-			<h1 id="title">컨텐츠 제목</h1>
-            <figure id="img" style="background: url(./img/20210328122450.png);"></figure>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente sunt, aut veritatis nesciunt qui voluptas excepturi inventore vitae necessitatibus nostrum quos, enim distinctio iusto itaque non similique sequi repellat vel?
-            </p>
+		<div class="modalDialog">
+            <button type="button" id="modalCloseBtn">☒</button>
+			<h1 id="modalTitle"></h1>
+            <figure id="modalImg"></figure>
+            <article id="modaldescription"></article>
 		</div>
 	</div>
 
     <script>
-        const contentBox = document.querySelector('.movie-box'); 
+        var body = {
+            "data": [
+                [
+                    {
+                        "title": "고질라vs콩",
+                        "description": `거대 몬스터들의 습격을 받은 지 3년 후, 콩은 스컬 아일랜드를 떠나 인간들의 보호관찰을 받고 있다. 한편, 인간들에게 등을 돌린 고질라는 비밀연구회사인 에이펙스에 존재하는 알 수 없는 힘에 이끌려 그곳을 쑥대밭으로 만든다. 위기 상황 속, 지구 안의 또 다른 지구인 할로우 어스의 에너지원을 찾아야만 인류가 안전할 수 있다는 판단하고 콩의 보호자들은 콩과 특별한 유대감을 형성하는 아이 지아와 함께 타이탄들의 고향일지 모르는 그 곳으로 위험한 여정을 떠난다. 그러던 중 분노에 찬 고질라의 공격을 받고, 마침내 맞붙게 된 두 전설의 장대한 대결은 앞으로 닥쳐올 대재앙의 서막에 불과했는데… 세상의 운명을 놓고, 지구상 가장 거대한 신화적 존재들의 스펙터클한 대격돌이 시작된다!`,
+                        "img": "img/kong.png"
+                    }
+                ],
+                [
+                    {
+                        "title": "미나리",
+                        "description": `"미나리는 어디서든 잘 자라" 낯선 미국, 아칸소로 떠나온 한국 가족. 가족들에게 뭔가 해내는 걸 보여주고 싶은 아빠 '제이콥'(스티븐 연)은 자신만의 농장을 가꾸기 시작하고 엄마 '모니카'(한예리)도 다시 일자리를 찾는다. 아직 어린 아이들을 위해 ‘모니카’의 엄마 ‘순자’(윤여정)가 함께 살기로 하고 가방 가득 고춧가루, 멸치, 한약 그리고 미나리씨를 담은 할머니가 도착한다. 의젓한 큰딸 '앤'(노엘 케이트 조)과 장난꾸러기 막내아들 '데이빗'(앨런 김)은 여느 그랜마같지 않은 할머니가 영- 못마땅한데… 함께 있다면, 새로 시작할 수 있다는 희망으로 하루하루 뿌리 내리며 살아가는 어느 가족의 아주 특별한 여정이 시작된다!`,
+                        "img": "img/minari.png",
+                    }
+                ],
+                [
+                    {
+                        "title": "와일드 마운틴 타임",
+                        "description": `아일랜드의 한 마을에서 농장을 꾸리고 있는 ‘로즈메리’와 ‘안토니’. ‘로즈메리’는 어린 시절부터 일편단심 ‘안토니’를 바라봤지만 연애에는 쑥맥인 ‘안토니’는 아는 듯 모르는 듯 덤덤하기만 하다. 어느 날, ‘안토니’의 아버지는 사촌 ‘아담’에게 농장을 물려주겠다 선언하고, 뉴욕의 은행가인 ‘아담’은 농장을 둘러보기 위해 마을을 찾는다. 어느새 ‘아담’과 ‘로즈메리’ 사이에는 미묘한 기류가 흐르기 시작하고, 세 사람의 관계는 점점 꼬이기 시작하는데… 운명은 우리가 정하는 거야. 한 번 부딪쳐보자`,
+                        "img": "img/wild.png",
+                    }
+                ],
+                [
+                    {
+                        "title": "귀멸의 칼날",
+                        "description": `혈귀로 변해버린 여동생 ‘네즈코’를 인간으로 되돌릴 단서를 찾아 비밀조직 귀살대에 들어간 ‘탄지로.’ ‘젠이츠’, ‘이노스케’와 새로운 임무 수행을 위해 무한열차에 탑승 후 귀살대 최강 검사 염주 ‘렌고쿠’와 합류한다. 달리는 무한열차에서 승객들이 하나 둘 흔적 없이 사라지자 숨어있는 식인 혈귀의 존재를 직감하는 ‘렌고쿠’. 귀살대 ‘탄지로’ 일행과 최강 검사 염주 ‘렌고쿠’는 어둠 속을 달리는 무한열차에서 모두의 목숨을 구하기 위해 예측불가능한 능력을 가진 혈귀와 목숨을 건 혈전을 시작하는데…`,
+                        "img": "img/guikal.png",
+                    }
+                ],
+                [
+                    {
+                        "title": "라야",
+                        "description": `인간과 드래곤이 평화롭게 공존하던 신비의 땅, 쿠만드라 왕국 살아있는 모든 생명을 삼키는 악의 세력 '드룬'이 들이닥치자, 드래곤들은 인간을 구하기 위해 스스로를 희생하고 전설 속으로 사라진다. 500년 후 부활한 '드룬'이 또다시 세상을 공포에 빠뜨리자, 전사 ‘라야’는 분열된 쿠만드라를 구하기 위해 전설 속 마지막 드래곤을 찾아 모험을 떠난다. 그러나, ‘라야’는 험난한 여정을 겪으며 세상을 구하기 위해서는 전설 속 드래곤보다 더 중요한 것이 있다는 것을 깨닫게 되는데…`,
+                        "img": "img/raya.png",
+                    }
+                ]
+            ]
+        }
+
+        var contentsNum = body.data.length;   // 임시 컨텐츠 수
+        console.log(body.data.length );
+
+        const table = document.querySelector('#contentTable');
+        const btn = document.querySelector('#btn');
+        const contentNum = document.querySelector('#contentNum');   // 컨텐츠 수 표시
+
         // 모달
-        let modal = document.querySelector('.modal');
-        const closeBtn = document.querySelector('#closeBtn');
+        const modal = document.querySelector('.modal');
+        const closeBtn = document.querySelector('#modalCloseBtn');
+        const modalTitle = document.querySelector('#modalTitle');
+        const modalImg = document.querySelector('#modalImg');
+        const modaldescription = document.querySelector('#modaldescription');
+        
+
+        contentNum.innerHTML = contentsNum + '개의 영화가 추천되었습니다.'
 
 
-        contentBox.addEventListener('click', function() {
-            modal.style.display = 'flex';
+        var remainder = 0;
+        if(contentsNum % 4 > 0) {
+            remainder = 1;
+        }
+        for (let i = 0; i < Math.floor(contentsNum/4) + remainder; i++) {   // row 생성
+            //console.log(Math.floor(contentsNum/4) + remainder);
+            const row = document.createElement('div');
+            row.classList.add('row');
+            
+            if (i === Math.floor(contentsNum/4)) {  // 나머지가 있다면 그 나머지에서는 
+                for (let j = 0; j < contentsNum % 4; j++) {   // row에 나머지만큼 컨텐츠 넣기
+                    // 컨텐츠 박스
+                    const content = document.createElement('div');
+                    content.classList.add('content');
+                    content.setAttribute( 'data-content', i*4+j);  // 컨텐츠 번호
+
+                    // 컨텐츠 이미지
+                    const contentImg = document.createElement('div');
+                    contentImg.classList.add('contentImg');
+                    contentImg.style.backgroundImage = "url("+body.data[i*4+j][0].img+")";   // 몇번째로 해야하지?
+                    //console.log(body.data[j][0].img);
+                    // 컨텐츠 정보
+                    const contentInfo = document.createElement('div');
+                    contentInfo.classList.add('contentInfo');
+                    // 컨텐츠 제목
+                    const contentTitle = document.createElement('div');
+                    contentTitle.classList.add('contentTitle');
+                    contentTitle.innerHTML = body.data[i*4+j][0].title;
+
+                    // 추비추
+                    const evaluationBox = document.createElement('div');
+                    evaluationBox.classList.add('evaluationBox');
+
+                    contentInfo.appendChild(contentTitle); 
+                    contentInfo.appendChild(evaluationBox); 
+                    content.appendChild(contentImg); 
+                    content.appendChild(contentInfo); 
+                    row.appendChild(content);   // 추가
+                }
+            }
+            else {
+                for (let j = 0; j < 4; j++) {   // row에 컨텐츠 넣기
+                    // 컨텐츠 박스
+                    const content = document.createElement('div');
+                    content.classList.add('content');
+                    content.setAttribute( 'data-content', i*4+j);  // 컨텐츠 번호
+
+                    // 컨텐츠 이미지
+                    const contentImg = document.createElement('div');
+                    contentImg.classList.add('contentImg');
+                    contentImg.style.backgroundImage = "url("+body.data[i*4+j][0].img+")"; 
+                    console.log(body.data[j][0].img);
+                    // 컨텐츠 정보
+                    const contentInfo = document.createElement('div');
+                    contentInfo.classList.add('contentInfo');
+                    // 컨텐츠 제목
+                    const contentTitle = document.createElement('div');
+                    contentTitle.classList.add('contentTitle');
+                    contentTitle.innerHTML = body.data[i*4+j][0].title;
+                    
+                    // 추비추
+                    const evaluationBox = document.createElement('div');
+                    evaluationBox.classList.add('evaluationBox');
+
+                    contentInfo.appendChild(contentTitle); 
+                    contentInfo.appendChild(evaluationBox); 
+                    content.appendChild(contentImg); 
+                    content.appendChild(contentInfo); 
+                    row.appendChild(content);   // 추가
+                }
+            }   
+            table.appendChild(row);
+            //row.setAttribute( 'data-row', i );
+            row.classList.add('unvisibleMode');
+        }
+        const rowArr = document.querySelectorAll('.row');
+        
+        // 처음에 두줄은 디폴트로 보여줌 
+        let count;
+        rowArr[0].classList.remove('unvisibleMode');
+        if (contentsNum > 4) {  // 컨텐츠가 1줄 보다 많다면
+            rowArr[1].classList.remove('unvisibleMode');
+            count = 1;
+        }
+        else count = 2;
+
+        // 버튼 이벤트
+        btn.addEventListener('click', function() {
+            console.log('Math.floor(contentsNum/4) + remainder = ',Math.floor(contentsNum/4) + remainder);
+            console.log(count);
+            if(count < Math.floor(contentsNum/4) + remainder) {  //count가 row개수보다 커지면
+                rowArr[count++].classList.remove('unvisibleMode');
+            }
+            if(count < Math.floor(contentsNum/4) + remainder) {  //count가 row개수보다 커지면
+                rowArr[count++].classList.remove('unvisibleMode');
+            }
+        });
+
+
+        // table이벤트 위임
+        table.addEventListener('click', function(e) {
+            const targetElem = e.target;	// 클릭한 거
+            console.log(targetElem.parentNode.classList.contains('content'));
+            if(targetElem.parentNode.classList.contains('content')) { // 누른거의 부모가 컨텐츠인 경우에만 가능
+                console.log(targetElem.parentNode.dataset.content); // 이러면 각 컨텐츠가 몇번째인지 알 수 있다
+                modalTitle.innerHTML = body.data[targetElem.parentNode.dataset.content][0].title;
+                modalImg.style.backgroundImage = "url("+body.data[targetElem.parentNode.dataset.content][0].img+")";
+                modaldescription.innerHTML = body.data[targetElem.parentNode.dataset.content][0].description;
+                modal.style.display = 'flex';
+            } 
         });
 
         closeBtn.addEventListener('click', function() {

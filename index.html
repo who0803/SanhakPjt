@@ -257,21 +257,24 @@
             
 
             if(textMessage.textContent === '' && selectMessage.textContent === '') {    // 텍스트도 입력받았고 컨텐츠도 선택했다면
-                fetch("https://jsonplaceholder.typicode.com/posts", {
+                fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        "sentence": text.value, // 사용자가 입력한 문장
-                        "type": currentItem.dataset.value,  // 활성화된 문의 정보
-                        "userId": "userId"  //이거 어떻게 해?
+                        "sentence" : text.value,    // 사용자가 입력한 문장
+                        "type" : currentItem.dataset.value,  // 활성화된 문의 정보
+                        "userId" : localStorage.getItem('userId')  
                     }),
                 })
                     .then((response) => response.json())
-                    .then((data) => console.log(data))
+                    .then((data) => {
+                        console.log('data = ', data);
+                        localStorage.setItem('historyId', data.body.historyId)// 브라우저에 저장
+                        location.href = '1.html';// 임시로 주석처리함
+                    })
                     
-                    realBtn.click();
             }
         });
 

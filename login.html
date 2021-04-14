@@ -37,7 +37,7 @@
             width: 2rem;
         }
 
-        form {
+        #loginContainer {
             margin-top: 2rem;
             border: 2px solid rgb(26, 188, 156);
             box-sizing: content-box;
@@ -60,35 +60,16 @@
             margin-bottom: 1rem;
         }
 
-        /*input[type="submit"]*/
         #btn {
-            position: relative;
             width: 100%;
             height: 15%;
-        }
-
-        .btnJoin {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        button[type="button"] {
             display: block;
-            z-index: 1;
             color: white;
             font-size: 1rem;
             background: rgb(26, 188, 156);
             border: none;
             border-radius: 10px;
         }
-
-        input[type="submit"] {
-            opacity: 0;
-        }
-
         a {
             align-self: flex-start;
             margin-bottom: 1rem;
@@ -111,24 +92,18 @@
             <h1>지금 뭐하지?</h1>
         </header>
 
-        <form action="index.html" method="POST">
+        <div id="loginContainer">
             <h2><img src="img/icon.png">Login</h2>
             <input type="text" class="in" name="id" placeholder="Username" id="idTxt" autofocus>
             <input type="password" class="in" name="pwd" id="password" placeholder="Password">
             <div id="errMessage"></div>
             <a href="register.html">☛ Sign up</a>
-            <div id="btn">
-                <button type="button" id="fakeBtn" class="btnJoin">Sign in</button>
-                <input type="submit" id="realBtn" value=" Sign in" class="btnJoin">
-            </div>
-            <input type="hidden" id="hidden" name="userId" value="">
-        </form>
+            <button type="button" id="btn">Sign in</button>
+        </div>
     </div>
     <script>
         // 패스워드 밑에 가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.
-        const btn = document.querySelector('#fakeBtn');
-        const realBtn = document.querySelector('#realBtn');
-        const hidden = document.querySelector('#hidden');
+        const btn = document.querySelector('#btn');
         const idTxt = document.querySelector('#idTxt');
         const password = document.querySelector('#password');
         let errMessage = document.querySelector('#errMessage');
@@ -154,8 +129,8 @@
                     .then((response) => response.json())
                     .then((data) => {
                         if (data.statusCode === 200) {   // 로그인 성공하면
-                            hidden.value = data.body.userId;    // 숨겨져서 userId넘어감
-                            realBtn.click();
+                            localStorage.setItem('userId', data.body.userId)// 브라우저에 저장
+                            location.href = 'index.html';
                         }
                         else {  // 로그인 실패하면
                             errMessage.innerHTML = '가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.';
