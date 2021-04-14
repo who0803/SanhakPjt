@@ -15,7 +15,7 @@ fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentence
       }
       
       console.log(data);
-      console.log(data.body.sentences[0][0].Content);
+      //console.log(data.body.sentences[0][0].Content);
       //console.log('userId = ', localStorage.getItem('userId'))
       //console.log('historyId = ', localStorage.getItem('historyId'))
     })
@@ -28,16 +28,19 @@ selection.forEach(function (e) {  // 이런식으로 포문 돌려서 핸들러 
                 beforeCount++;
             }
         }
-        console.log("1: " + beforeCount);
+        //console.log("1: " + beforeCount);
         if (beforeCount === 3 && !(e.currentTarget.classList.contains('active'))) return; /*active가 이미 3개있는데 눌린거 말고 다른 거 눌리면*/
         else e.currentTarget.classList.toggle('active');
         
         afterCount = 0;
         for (var i = 0; i < selection.length; i++) {    /* 선택후 카운트의 개수 */
             if (selection[i].classList.contains('active')) {    /* 하나씩 다 검사 */
+                if(selection[i].classList.contains('input')) console.log(selection[i].value);
+                else console.log(selection[i].textContent);
                 afterCount++;
             }
         }
+        console.log("----------------------------------");
     });
 });
 

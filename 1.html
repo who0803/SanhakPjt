@@ -4,33 +4,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="default.css">
     <title>지금 뭐하지?</title>
     <style>
         #body {
-            display: grid;
-            grid-template-columns: 35% 1fr 35%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
+            background: ivory;
         }
         #container {
-            margin-top: 2rem;
+            font-weight: bolder;
             text-align: center;
-            grid-column: 2;
-            align-self: start;
-            justify-self: center;
+            min-width: 400px;
         }
         #seletion-parent {
-            display: grid;
-            grid-auto-rows: 1fr 1fr 1fr 1fr 1fr;
-            row-gap: 1rem;
-            
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .seletion {
+            display: block;
             margin-bottom: 1rem;
             padding: 0.5rem;
             border: lightgray 1px solid;
             background: lightgray;
             border-radius: 1rem;
-
+            width: 100%;
+        }
+        .input {
+            box-sizing : border-box;    /*인풋창 안삐져 나오게*/
+            font-size: 1rem;
+            font-weight: bolder;
+            text-align: center;
         }
         h1 {
             font-size: 4rem;
@@ -38,17 +45,14 @@
             text-align: center;
             margin-bottom: 15px;
         }
-        #felling {
+        #feelingTxt {
+            margin-bottom: 1rem;
+        }
+        #feeling {
             color: rgb(26, 188, 156);
         }
-        p {
-            font-weight: 900;
-        }
-        #selectText {
-            margin-bottom: 0;
-        }
         #max3 {
-            margin-top: 0;
+            margin-bottom: 10px;
         }
         #btn {
             width: 40%;
@@ -78,15 +82,15 @@
     <div id="body">
         <div id="container">
             <h1>지금 뭐하지?</h1>
-            <h2>지금 <span id="feeling"></span> 기분인 것 같아요.</h2>
-            <p id="selectText">도움되는 컨텐츠를 추천하기 위해서 <br>아래의 선택지 중 공감되는 말을 선택해주세요.</p>
-            <p id="max3">(최대 3개)</p>
+            <h2 id="feelingTxt">지금 <span id="feeling"></span> 기분인 것 같아요.</h2>
+            <div id="selectText">도움되는 컨텐츠를 추천하기 위해서 <br>아래의 선택지 중 공감되는 말을 선택해주세요.</div>
+            <div id="max3">(최대 3개)</div>
             <div class="seletion-parent">
-                <div id="s1" class="seletion">empty</div>
-                <div id="s2" class="seletion">empty</div>
-                <div id="s3" class="seletion">empty</div>
-                <div id="s4" class="seletion">empty</div>
-                <div id="s5" class="seletion">empty</div>
+                <div id="s1" class="seletion"></div>
+                <div id="s2" class="seletion"></div>
+                <div id="s3" class="seletion"></div>
+                <div id="s4" class="seletion"></div>
+                <input id="s5" class="seletion input" placeholder="입력해주세요."></input>
             </div>
             <button type="button" id="btn">추천받기</button>
         </div> 
