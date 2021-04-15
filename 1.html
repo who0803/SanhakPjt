@@ -13,6 +13,8 @@
             align-items: center;
             height: 100vh;
             background: ivory;
+            position: relative;
+            min-width: 1100px;
         }
         #container {
             font-weight: bolder;
@@ -32,6 +34,7 @@
             background: lightgray;
             border-radius: 1rem;
             width: 100%;
+            cursor: pointer;
         }
         .input {
             box-sizing : border-box;    /*인풋창 안삐져 나오게*/
@@ -44,6 +47,7 @@
             color: rgb(26, 188, 156);
             text-align: center;
             margin-bottom: 15px;
+            cursor: pointer;
         }
         #feelingTxt {
             margin-bottom: 1rem;
@@ -73,15 +77,149 @@
         /*//////////////////////////////////////////*/
         .active {
             background: rgb(26, 188, 156); 
-            border: rgb(26, 188, 156) 2px solid;
+            border: rgb(26, 188, 156) 1px solid;
             color: white;
+        }
+        /*회원정보*/
+        #guest {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            padding: 10px;
+            color: white;
+            background-color: rgb(50, 199, 169);
+            font-size: 1rem;
+            border-radius: 50px;
+        }
+
+        /* modal */
+        .modal {
+            display: none;
+            /*가운데 정렬*/
+            justify-content: center;
+            align-items: center;
+
+            /*고정되면서 전체 차지*/
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .modalDialog {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            width: 90vw;
+            height: 90vh;
+            min-width: 1100px;
+            min-height: 580px;
+            /*화면 90%정도*/
+            padding: 2em;
+            border-radius: 1em;
+            background: white;
+            position: relative;
+        }
+        #modalCloseBtn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 2rem;
+        }
+        #modalCloseBtn:hover {
+            color: red;
+        }
+        #modalHead {
+            font-size: 2rem;
+            text-align: center;
+            font-weight: bolder;
+            align-items: flex-start;
+            width: 80%;
+            padding-bottom: 20px;
+            border-bottom: 4px gray solid;
+        }
+        #modalContentsBox {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+        }
+        #modalContent {
+            position: relative;
+            width: 227px;
+            height: 350px;
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+            
+        }
+        #modalImg {
+            /*모달박스 안 이미지*/
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 207px;
+            height: 298px;
+            background-size: contain;
+            cursor: pointer;
+        }
+        #hover {
+            box-sizing: border-box;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 207px;
+            height: 298px;
+            transition: 1s;
+            cursor: pointer;
+            background: black;
+            color: white;
+            font-weight: bolder;
+            padding: 1rem;
+            display: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+            z-index: 1;
+        }
+        .chosenContent {    /*모달 이미지 선택*/
+            border: 10px rgb(26, 188, 156) solid;
+        }
+        #modalTitle {
+            position: absolute;
+            top: 299px;
+            width: 207px;
+            padding-top: 10px;
+            font-size: 20px;
+            font-weight: bolder;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        #modalOkBtn {
+            justify-self: center;
+            color: white;
+            background-color: rgb(26, 188, 156);
+            font-size: 20px;
+            font-weight: bolder;
+            padding: 10px;
+            border-radius: 10px;
+            transition: 1s;
+        }
+        #modalOkBtn:hover {
+            transform: scale(1.3);
+            background-color: rgb(57, 214, 183);
         }
     </style>
 </head>
 <body>
     <div id="body">
+        <div id="guest"></div>
         <div id="container">
-            <h1>지금 뭐하지?</h1>
+            <h1 onclick="location.href = 'index.html'">지금 뭐하지?</h1>
             <h2 id="feelingTxt">지금 <span id="feeling"></span> 기분인 것 같아요.</h2>
             <div id="selectText">도움되는 컨텐츠를 추천하기 위해서 <br>아래의 선택지 중 공감되는 말을 선택해주세요.</div>
             <div id="max3">(최대 3개)</div>
@@ -94,6 +232,37 @@
             </div>
             <button type="button" id="btn">추천받기</button>
         </div> 
+    </div>
+
+    <!--모달-->
+    <div class="modal">
+        <div class="modalDialog">
+            <button type="button" id="modalCloseBtn">☒</button>
+            <div id="modalHead">선호하는 컨텐츠를 선택해주세요. (중복가능)</div>
+            <div id="modalContentsBox">
+                <div id="modalContent">
+                    <figure id="hover"></figure>
+                    <figure id="modalImg"></figure>
+                    <div id="modalTitle"></div>
+                </div>
+                <div id="modalContent">
+                    <figure id="hover"></figure>
+                    <figure id="modalImg"></figure>
+                    <div id="modalTitle"></div>
+                </div>
+                <div id="modalContent">
+                    <figure id="hover"></figure>
+                    <figure id="modalImg"></figure>
+                    <div id="modalTitle"></div>
+                </div>
+                <div id="modalContent">
+                    <figure id="hover"></figure>
+                    <figure id="modalImg"></figure>
+                    <div id="modalTitle"></div>
+                </div>
+            </div>
+            <button id="modalOkBtn">확인</button>
+        </div>
     </div>
     <script src="1.js"></script>
 </body>

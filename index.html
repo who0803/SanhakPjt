@@ -14,7 +14,10 @@
             align-items: center;
             height: 100vh;
             background: ivory;
+            position: relative;
+            min-width: 1100px;
         }
+
         #container {
             display: flex;
             flex-direction: column;
@@ -56,108 +59,180 @@
             border: none;
             font-size: 1rem;
         }
-        .message{
+
+        .message {
             color: red;
-            text-align:center;
+            text-align: center;
         }
+
         /*///////////////////////////////////////////*/
         #doorContainer {
             display: flex;
             flex-direction: column;
             align-items: center;
-			justify-content: center;
+            justify-content: center;
             min-width: 50%;
         }
+
         #doorTitle {
             font-size: 1.5rem;
             margin-top: 4rem;
             margin-bottom: 1rem;
-            color:rgb(26, 188, 156);
+            color: rgb(26, 188, 156);
             font-weight: bolder;
         }
-        .stage {	/*배경*/
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 200px;	
-			height: 150px;
-		}
-		.door {
-			position: relative;	/*기준점이 되도록*/
-			width: 100px;
-			height: 150px;
-		}
-		.door-back {	/*일분이 나오는 입구*/ 
-            box-sizing: border-box;
-			overflow: hidden;	/*일분이 밖으로 나가도 안보이게*/
-			position: absolute;	/*겹치게*/
-			left: 0;	
-			top: 0;
-			width: 100%;	/*부모크기 꽉 채우겠다*/
-			height: 100%;
-			background: rgb(26, 188, 156);
-            border: 5px black solid;
-		}
-		.ilbuni {
-			position: absolute;
-			left: 0;	/*위치는 왼쪽 아래기준*/
-			bottom: 0;
-			width: 100px;	/*일분이 크기 고정*/
-			height: 100px;
-			background-repeat: no-repeat;
-			background-position: 50% 100%;	/*백그라운드 이미지 위치는 가운데 아래 center bottom*/
-			background-size: contain;
 
-			/*transform에서 3d가 붙은 애들은 하드웨어 가속을 함. translate3d쓰면 퍼포먼스 향상시킴*/
-			/*translate 쓸 때 %를 쓰면 편하다. 오브젝트(ilbuni)의 크기를 100%로 잡는다*/
-			transform: translate3d(100%, 0, 0);	/*처음에는 아예 안보이는 상태*/
-			transition: 0.5s 0.5s;				/*duration  delay*/
-		}
-		/*이미지 넣어줌*/
-		.door:nth-child(1) .ilbuni { background-image: url(img/book.png); }	
-		.door:nth-child(2) .ilbuni { background-image: url(img/movie.png); }
-		.door-body {	/*문*/
-			position: absolute;	/*문 겹침*/
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			transition: 0.5s;		/*문열리는 속도*/
-			transform-origin: 0%;	/*기준점은 문 맨왼쪽*/
-			cursor: pointer;
-		}
-		.door:nth-child(1) .door-body { 
+        .stage {
+            /*배경*/
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 150px;
+        }
+
+        .door {
             position: relative;
-            background-image: url(img/door.png); 
+            /*기준점이 되도록*/
+            width: 100px;
+            height: 150px;
+        }
+
+        .door-back {
+            /*일분이 나오는 입구*/
+            box-sizing: border-box;
+            overflow: hidden;
+            /*일분이 밖으로 나가도 안보이게*/
+            position: absolute;
+            /*겹치게*/
+            left: 0;
+            top: 0;
+            width: 100%;
+            /*부모크기 꽉 채우겠다*/
+            height: 100%;
+            background: rgb(26, 188, 156);
+            border: 5px black solid;
+        }
+
+        .ilbuni {
+            position: absolute;
+            left: 0;
+            /*위치는 왼쪽 아래기준*/
+            bottom: 0;
+            width: 100px;
+            /*일분이 크기 고정*/
+            height: 100px;
             background-repeat: no-repeat;
-            background-size: 230px 190px;;
+            background-position: 50% 100%;
+            /*백그라운드 이미지 위치는 가운데 아래 center bottom*/
+            background-size: contain;
+
+            /*transform에서 3d가 붙은 애들은 하드웨어 가속을 함. translate3d쓰면 퍼포먼스 향상시킴*/
+            /*translate 쓸 때 %를 쓰면 편하다. 오브젝트(ilbuni)의 크기를 100%로 잡는다*/
+            transform: translate3d(100%, 0, 0);
+            /*처음에는 아예 안보이는 상태*/
+            transition: 0.5s 0.5s;
+            /*duration  delay*/
+        }
+
+        /*이미지 넣어줌*/
+        .door:nth-child(1) .ilbuni {
+            background-image: url(img/book.png);
+        }
+
+        .door:nth-child(2) .ilbuni {
+            background-image: url(img/movie.png);
+        }
+
+        .door-body {
+            /*문*/
+            position: absolute;
+            /*문 겹침*/
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            transition: 0.5s;
+            /*문열리는 속도*/
+            transform-origin: 0%;
+            /*기준점은 문 맨왼쪽*/
+            cursor: pointer;
+        }
+
+        .door:nth-child(1) .door-body {
+            position: relative;
+            background-image: url(img/door.png);
+            background-repeat: no-repeat;
+            background-size: 230px 190px;
+            ;
             background-position: -65px -20px;
-        }	
-		.door:nth-child(2) .door-body { 
+        }
+
+        .door:nth-child(2) .door-body {
             position: relative;
-            background-image: url(img/door.png); 
+            background-image: url(img/door.png);
             background-repeat: no-repeat;
-            background-size: 230px 190px;;
+            background-size: 230px 190px;
+            ;
             background-position: -66px -20px;
         }
-		.door-opened .door-body {	/* 문 열림 */
-			transform: perspective(800px) rotateY(-110deg);		/*transform안에 쓰면 시점 차이가 없다. -인 이유는 문을 당기는 거라서*/
-		}
-		.door-opened .ilbuni {
-			transform: translate3d(0, 0, 0);	/*문열리면 일분이 나타남*/
-		}
+
+        .door-opened .door-body {
+            /* 문 열림 */
+            transform: perspective(800px) rotateY(-110deg);
+            /*transform안에 쓰면 시점 차이가 없다. -인 이유는 문을 당기는 거라서*/
+        }
+
+        .door-opened .ilbuni {
+            transform: translate3d(0, 0, 0);
+            /*문열리면 일분이 나타남*/
+        }
+
         .contentName {
-            position:absolute;
+            position: absolute;
             left: 20%;
             top: 25%;
             font-size: 20px;
             font-weight: bolder;
+        }
+
+        /*로그인*/
+        .log {
+            position: absolute;
+            padding: 10px;
+            border: 3px rgb(26, 188, 156) solid;
+            font-size: 1rem;
+            color: rgb(26, 188, 156);
+            cursor: pointer;
+        }
+
+        #login {
+            left: 20px;
+            top: 20px;
+        }
+
+        #logout {
+            left: 90px;
+            top: 20px;
+        }
+        #guest {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            padding: 10px;
+            color: white;
+            background-color: rgb(50, 199, 169);
+            font-size: 1rem;
+            border-radius: 50px;
         }
     </style>
 </head>
 
 <body>
     <div class="body">
+        <div id="login" class="log" onclick="location.href = 'login.html'">login</div>
+        <div id="logout" class="log">logout</div>
+        <div id="guest"></div>
         <div id="container">
             <div id="searchContainer">
                 <h1 onclick="location.href = 'index.html'">지금 뭐하지?</h1>
@@ -167,7 +242,7 @@
                 </div>
                 <div id="textMessage" class="message"></div>
             </div>
-    
+
             <!--문-->
             <div id="doorContainer">
                 <div id="doorTitle">원하시는 컨텐츠를 선택해주세요!</div>
@@ -176,28 +251,40 @@
                         <div class="door-back">
                             <div class="ilbuni"></div>
                         </div>
-                        <div class="door-body"><div class="contentName">Book</div></div>
+                        <div class="door-body">
+                            <div class="contentName">Book</div>
+                        </div>
                     </div>
                     <div class="door" data-value="movie">
                         <div class="door-back">
                             <div class="ilbuni"></div>
                         </div>
-                        <div class="door-body"><div class="contentName">Movie</div></div>
+                        <div class="door-body">
+                            <div class="contentName">Movie</div>
+                        </div>
                     </div>
                 </div>
                 <div id="selectMessage" class="message"></div>
             </div>
-            
+
         </div>
     </div>
-    <a href="login.html">login</a>
-
     <script>
         const btn = document.querySelector('#btn');
         let text = document.querySelector('#text');
         let textMessage = document.querySelector('#textMessage');   // 아무글도 입력안했을 때
         let selectMessage = document.querySelector('#selectMessage');   // 아무 문도 선택안했을 때
-
+        const logout = document.querySelector('#logout');
+        const guest = document.querySelector('#guest');
+        // 로그아웃
+        logout.addEventListener('click', function () {
+            localStorage.removeItem('userId');
+            localStorage.removeItem('userName');
+            guest.style.display = 'none';
+        });
+        // 회원정보
+        if (localStorage.getItem('userName')) guest.innerHTML = localStorage.getItem('userName')+" 님";
+        else guest.style.display = 'none';
         // 문
         const stageElem = document.querySelector('.stage');	// 부모태그
         // 현재 활성화된 아이템을 저장
@@ -236,46 +323,52 @@
 
         stageElem.addEventListener('click', doorHandler);
 
-
+        console.log(localStorage.getItem('userId'));
 
 
 
         // 검색버튼
         btn.addEventListener('click', function () {
-            if (text.value === '') { // 아무것도 안입력했으면
-                textMessage.innerHTML = '지금 생각나는 말을 입력해주세요!';
-            }
-            else textMessage.innerHTML = '';
+
+            if (localStorage.getItem('userId')) {    // 로그인 했으면
+                if (text.value === '') { // 아무것도 안입력했으면
+                    textMessage.innerHTML = '지금 생각나는 말을 입력해주세요!';
+                }
+                else textMessage.innerHTML = '';
 
 
-            // 문활성화 된것이 없다는 메시지 
-            if(!currentItem) {// 처음에 활성화된 것이 없으면
-                selectMessage.innerHTML = '컨텐츠를 선택해주세요';
-            }
-            else if(!currentItem.classList.contains('door-opened')) {
+                // 문활성화 된것이 없다는 메시지 
+                if (!currentItem) {// 처음에 활성화된 것이 없으면
                     selectMessage.innerHTML = '컨텐츠를 선택해주세요';
-            }
-            
+                }
+                else if (!currentItem.classList.contains('door-opened')) {
+                    selectMessage.innerHTML = '컨텐츠를 선택해주세요';
+                }
 
-            if(textMessage.textContent === '' && selectMessage.textContent === '') {    // 텍스트도 입력받았고 컨텐츠도 선택했다면
-                fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        "sentence" : text.value,    // 사용자가 입력한 문장
-                        "type" : currentItem.dataset.value,  // 활성화된 문의 정보
-                        "userId" : localStorage.getItem('userId')  
-                    }),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        console.log('data = ', data);
-                        localStorage.setItem('historyId', data.body.historyId)// 브라우저에 저장
-                        location.href = '1.html';
+
+                if (textMessage.textContent === '' && selectMessage.textContent === '') {    // 텍스트도 입력받았고 컨텐츠도 선택했다면
+                    fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            "sentence": text.value,    // 사용자가 입력한 문장
+                            "type": currentItem.dataset.value,  // 활성화된 문의 정보
+                            "userId": localStorage.getItem('userId')
+                        }),
                     })
-                    
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log('data = ', data);
+                            localStorage.setItem('historyId', data.body.historyId)// 브라우저에 저장
+                            location.href = '1.html';
+                        })
+
+                }
+            }
+            else {
+                textMessage.innerHTML = '로그인 해주세요.';
             }
         });
 
@@ -283,6 +376,6 @@
 
 
     </script>
-    </body>
+</body>
 
 </html>

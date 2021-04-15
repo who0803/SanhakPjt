@@ -16,12 +16,14 @@
             width: 100vw;
             height: 100vh;
             background: ivory;
+            min-width: 1100px;
         }
 
         h1 {
             font-size: 4rem;
             margin-bottom: 1rem;
             color: rgb(26, 188, 156);
+            cursor: pointer;
         }
 
         h2 {
@@ -91,7 +93,7 @@
 <body>
     <div class="login-box">
         <header>
-            <h1>지금 뭐하지?</h1>
+            <h1 onclick="location.href = 'index.html'">지금 뭐하지?</h1>
         </header>
 
         <div id="loginContainer">
@@ -132,6 +134,7 @@
                     .then((data) => {
                         if (data.statusCode === 200) {   // 로그인 성공하면
                             localStorage.setItem('userId', data.body.userId)// 브라우저에 저장
+                            localStorage.setItem('userName', idTxt.value)
                             location.href = 'index.html';
                         }
                         else {  // 로그인 실패하면
