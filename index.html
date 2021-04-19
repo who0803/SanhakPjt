@@ -204,15 +204,7 @@
             font-size: 1rem;
             color: rgb(26, 188, 156);
             cursor: pointer;
-        }
-
-        #login {
             left: 20px;
-            top: 20px;
-        }
-
-        #logout {
-            left: 90px;
             top: 20px;
         }
         #guest {
@@ -274,17 +266,32 @@
         let text = document.querySelector('#text');
         let textMessage = document.querySelector('#textMessage');   // 아무글도 입력안했을 때
         let selectMessage = document.querySelector('#selectMessage');   // 아무 문도 선택안했을 때
+        const login = document.querySelector('#login');
         const logout = document.querySelector('#logout');
         const guest = document.querySelector('#guest');
+
+
+        // 회원정보, 로그인, 로그아웃 보여짐 유무 판단
+        if (localStorage.getItem('userName')) { // 로그인 되있으면
+            logout.style.display = 'block';
+            login.style.display = 'none';
+            guest.innerHTML = localStorage.getItem('userName')+" 님";
+        }
+        else {// 제일 처음에 로그인 안되어있는 상태
+            login.style.display = 'block';
+            logout.style.display = 'none';
+            guest.style.display = 'none';
+        }
+
         // 로그아웃
-        logout.addEventListener('click', function () {
+        logout.addEventListener('click', function () { // 로그아웃 누르면
             localStorage.removeItem('userId');
             localStorage.removeItem('userName');
             guest.style.display = 'none';
+            login.style.display = 'block';
+            logout.style.display = 'none';
         });
-        // 회원정보
-        if (localStorage.getItem('userName')) guest.innerHTML = localStorage.getItem('userName')+" 님";
-        else guest.style.display = 'none';
+        
         // 문
         const stageElem = document.querySelector('.stage');	// 부모태그
         // 현재 활성화된 아이템을 저장
@@ -331,6 +338,7 @@
         btn.addEventListener('click', function () {
 
             if (localStorage.getItem('userId')) {    // 로그인 했으면
+                
                 if (text.value === '') { // 아무것도 안입력했으면
                     textMessage.innerHTML = '지금 생각나는 말을 입력해주세요!';
                 }
@@ -347,6 +355,7 @@
 
 
                 if (textMessage.textContent === '' && selectMessage.textContent === '') {    // 텍스트도 입력받았고 컨텐츠도 선택했다면
+                    textMessage.innerHTML = '분석중입니다.';
                     fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences", {
                         method: "POST",
                         headers: {
@@ -361,11 +370,17 @@
                         .then((response) => response.json())
                         .then((data) => {
                             console.log('data = ', data);
-                            localStorage.setItem('historyId', data.body.historyId)// 브라우저에 저장
-                            location.href = '1.html';
+                            if(!data.body.success) {  // 에러일 경우
+                                textMessage.innerHTML = data.body.message;
+                            }
+                            else {
+                                localStorage.setItem('historyId', data.body.historyId)// 브라우저에 저장
+                                location.href = '1.html';
+                            }
                         })
 
                 }
+
             }
             else {
                 textMessage.innerHTML = '로그인 해주세요.';

@@ -5,11 +5,25 @@ if (!localStorage.getItem('userName')) {
     loginJudge.style.color = 'gray';
     loginJudge.style.fontSize = '3rem';
     loginJudge.style.textAlign = 'center';
-    setTimeout(function() {
+    setTimeout(function () {
         window.location.href = 'login.html'; // 로그인 안돼있으면 로그인 페이지로 이동
     }, 3000);
 }
 else {  // 로그인 되어있을 경우 실행
+
+    const guest = document.querySelector('#guest');
+    const logout = document.querySelector('#logout');
+
+    // 로그아웃
+    logout.addEventListener('click', function () { // 로그아웃 누르면 로그아웃하고 로그인페이지로 넘어가
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userName');
+        location.href = 'login.html';
+    });
+
+    // 회원정보
+    if (localStorage.getItem('userName')) guest.innerHTML = localStorage.getItem('userName') + " 님";
+
 
     // 임시 객체
     var body = {
@@ -45,13 +59,7 @@ else {  // 로그인 되어있을 경우 실행
         ]
     }
 
-    var selection = document.querySelectorAll('.seletion');
-    var beforeCount = 0;  /* 누르기 전 상태.  선택전 카운트의 개수 */
-    var afterCount = 0; /* 버튼. 선택후 카운트의 개수 */
-    const btn = document.querySelector('#btn');
-    let feeling = document.querySelector('#feeling');
-    let feelingData = [];    // 감정 객체 데이터 배열
-    const guest = document.querySelector('#guest');
+    // init()에서 사용해야되기 때문에 밖으로 빼줌
     //모달
     const modal = document.querySelector('.modal');
     const closeBtn = document.querySelector('#modalCloseBtn');
@@ -62,116 +70,275 @@ else {  // 로그인 되어있을 경우 실행
     const hover = document.querySelectorAll('#hover');
     const modalOkBtn = document.querySelector('#modalOkBtn');
 
-    // 회원정보
-    if (localStorage.getItem('userName')) guest.innerHTML = localStorage.getItem('userName')+" 님";
-    
-    
-    fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences?userId=" + localStorage.getItem('userId') + "&historyId=" + localStorage.getItem('historyId'))
-      .then((response) => response.json())
-      .then((data) => {
-          feeling.innerHTML = data.body.emotion;
-          for (let i = 0; i < 4; i++) {
-            selection[i].innerHTML =  data.body.sentences[i][0].Content;
-            feelingData[i] = data.body.sentences[i][0];
-          }
-          
-          console.log(data);
-          //console.log(data.body.sentences[0][0].Content);
-          //console.log('userId = ', localStorage.getItem('userId'))
-          //console.log('historyId = ', localStorage.getItem('historyId'))
-        })
-    
-    selection.forEach(function (e) {  // 이런식으로 포문 돌려서 핸들러 추가
-        e.addEventListener('click', function(e) { // 인덱스로 접근
-            beforeCount = 0;
-            for (var i = 0; i < selection.length; i++) {    /* 선택전 카운트의 개수 */
-                if (selection[i].classList.contains('active')) {    /* 하나씩 다 검사 */
-                    beforeCount++;
+    //선택지
+    let selection;
+    let btn;
+    let feeling;
+    let addSeletion;
+
+    let beforeCount = 0;  /* 누르기 전 상태.  선택전 카운트의 개수 */
+    let afterCount = 0; /* 버튼. 선택후 카운트의 개수 */
+    let feelingData = [];    // 감정 객체 데이터 배열
+
+    // errMessages
+    let errMessages = [];
+
+    function init() {
+        // 선택지 이벤트 리스너    
+        selection.forEach(function (e) {  // 이런식으로 포문 돌려서 핸들러 추가
+            e.addEventListener('click', function (e) { // 인덱스로 접근
+                beforeCount = 0;
+                for (var i = 0; i < selection.length; i++) {    /* 선택전 카운트의 개수 */
+                    if (selection[i].classList.contains('active')) {    /* 하나씩 다 검사 */
+                        beforeCount++;
+                    }
                 }
-            }
-            //console.log("1: " + beforeCount);
-            if (beforeCount === 3 && !(e.currentTarget.classList.contains('active'))) return; /*active가 이미 3개있는데 눌린거 말고 다른 거 눌리면*/
-            else e.currentTarget.classList.toggle('active');
+                //console.log("1: " + beforeCount);
+                if (beforeCount === 3 && !(e.currentTarget.classList.contains('active'))) return; /*active가 이미 3개있는데 눌린거 말고 다른 거 눌리면*/
+                else e.currentTarget.classList.toggle('active');
+
+                afterCount = 0;
+                for (var i = 0; i < selection.length; i++) {    /* 선택후 카운트의 개수 */
+                    if (selection[i].classList.contains('active')) {    /* 하나씩 다 검사 */
+                        afterCount++;
+                    }
+                }
+            });
+        });
+
+        // 선택지 추가버튼
+        let add = 5;
+        addSeletion.addEventListener('click', function () {
+            selection[add++].style.display = 'block';
+            if (add === 7) addSeletion.style.display = 'none';
+        });
+
+
+        
+        // 감정선택 확인버튼
+        btn.addEventListener('click', function () {
             
-            afterCount = 0;
-            for (var i = 0; i < selection.length; i++) {    /* 선택후 카운트의 개수 */
-                if (selection[i].classList.contains('active')) {    /* 하나씩 다 검사 */
-                    afterCount++;
+            for(let i = 0; i < 3; i++) {// 에러메시지 리셋
+                errMessages[i].innerHTML = '';
+                errMessages[i].style.display = 'none';   
+            }
+/*
+            let errFlag = 0;
+            for(let i = 0; i < selection.length; i++) {
+                if (selection[i].classList.contains('active')) {    // 선택된거중에
+                    if (selection[i].classList.contains('input')) { // 인풋창인거 중에
+                        if (selection[i].value === '') {    // 아무것도 입력안된 것이 있다면
+                            errFlag = 1;
+                            errMessages[3].style.display = 'block';
+                        }
+                        else {
+                            errMessages[3].style.display = 'none';
+                        }
+                    }
                 }
             }
-        });
-    });
-    
-    
+*/
+            if (afterCount !== 0/* && errFlag === 0*/) { // 하나라도 선택된 것이 있어야 가능
+                
+                let chosenTxtArr = [];
+                //let chosenTxt = {}; // 선택된 txt
+                // 선택된 텍스트 찾아내기
+                for (var i = 0; i < selection.length; i++) {    /* 선택후 카운트의 개수 */
 
-    // 호버이벤트 리스너
-    for(let i = 0; i < 4; i++) {
-        modalImg[i].addEventListener('mouseover', function() {
-            hover[i].style.display = 'block';
-            hover[i].style.opacity = '0.7';
+                    if (selection[i].classList.contains('active')) {    /* 하나씩 다 검사 */
+
+                        
+                        if (selection[i].classList.contains('input')) {
+                            chosenTxtArr.push({
+                                id: i,
+                                text: selection[i].value
+                            });
+                        }
+                        else {
+                            chosenTxtArr.push({
+                                id: i,
+                                text: selection[i].textContent
+                            });
+                        }
+                    }
+                }
+                console.log('chosenTxtArr = ', chosenTxtArr);
+                fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/recommendations", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        "userId": localStorage.getItem('userId'),
+                        "historyId": localStorage.getItem('historyId'),
+                        "selection": chosenTxtArr
+                    }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log('data.body.sentences = ',data.body.sentences);
+                        if (data.body.success) { // 에러없이 응답이 잘왔으면
+                            // 모달에 정보 넣기
+                            for (let i = 0; i < 4; i++) {
+                                modalTitle[i].innerHTML = data.body.contents[i].title;
+                                modalImg[i].style.backgroundImage = "url(" + data.body.contents[i].img + ")";
+                                hover[i].innerHTML = data.body.contents[i].desc;   // 호버에 설명 넣음
+                                modal.style.display = 'flex';
+                            }
+                        }
+                        else {  // 분석할 수 없는 문장이 오면
+                            
+                            for (let i = 0; i < data.body.sentences.length; i++) {
+                                switch (data.body.sentences[i].sentence.id) {
+                                    case 4:
+                                        errMessages[0].style.display = 'block';
+                                        errMessages[0].innerHTML = data.body.sentences[i].message;
+                                        break;
+                                    case 5:
+                                        errMessages[1].style.display = 'block';
+                                        errMessages[1].innerHTML = data.body.sentences[i].message;
+                                        break;
+                                    case 6:
+                                        errMessages[2].style.display = 'block';
+                                        errMessages[2].innerHTML = data.body.sentences[i].message;
+                                        break;
+                                }
+                            }
+                        }
+
+
+                    })
+            }
+            console.log('-----------------');
         });
 
-        hover[i].addEventListener('mouseout', function() {
-            hover[i].style.display = 'none';
+
+
+
+
+
+        // 모달/////////////////////////
+        // 호버이벤트 리스너
+        for (let i = 0; i < 4; i++) {
+            modalImg[i].addEventListener('mouseover', function () {
+                hover[i].style.display = 'block';
+                hover[i].style.opacity = '0.7';
+            });
+
+            hover[i].addEventListener('mouseout', function () {
+                hover[i].style.display = 'none';
+            });
+
+            // 이미지 누르면
+            hover[i].addEventListener('click', function (e) {
+                e.currentTarget.parentNode.classList.toggle('chosenContent');
+            });
+        }
+
+
+
+        // 모달 확인 버튼
+        let chosenArr = [];
+        modalOkBtn.addEventListener('click', function () {
+            for (let i = 0; i < 4; i++) {
+                if (modalContent[i].classList.contains('chosenContent')) {
+                    chosenArr.push(i);
+                }
+            }
+            for (let i = 0; i < chosenArr.length; i++) {
+                console.log(body.data[chosenArr[i]][0].title);
+            }
+            console.log('-----------');
+            // 배열 비우기전에 넘기면 될듯 
+            chosenArr = [];
+            location.href = '2.html';
         });
 
-        // 이미지 누르면
-        hover[i].addEventListener('click', function(e) {
-            e.currentTarget.parentNode.classList.toggle('chosenContent');
+
+        // 모달 닫기 버튼
+        closeBtn.addEventListener('click', function () {
+            modal.style.display = 'none';
+            chosenArr = [];
+            for (let i = 0; i < 4; i++) {
+                modalContent[i].classList.remove('chosenContent');
+            }
         });
     }
 
-    btn.addEventListener('click', function() {
-        //console.log("2: "+count);
-        if (afterCount !== 0) { // 하나라도 선택된 것이 있어야 가능
-            
-            // 선택된 텍스트 찾아내기
-            for (var i = 0; i < selection.length; i++) {    /* 선택후 카운트의 개수 */
-                if (selection[i].classList.contains('active')) {    /* 하나씩 다 검사 */
-                    if(selection[i].classList.contains('input')) console.log(selection[i].value);
-                    else console.log(selection[i].textContent);
-                }
+
+    fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences?userId=" + localStorage.getItem('userId') + "&historyId=" + localStorage.getItem('historyId'))
+        .then((response) => response.json())
+        .then((data) => {
+            //feeling.innerHTML = data.body.emotion;    // 감정 배열 출력
+
+            const body = document.querySelector('#body');
+            //먼저 큰틀
+            const container = document.createElement('div');
+            container.classList.add('container');
+            container.innerHTML =
+                `<h1 onclick="location.href = 'index.html'">지금 뭐하지?</h1>
+            <h2 id ="feelingTxt">지금 <span id ="feeling"></span> 기분인 것 같아요.</h2>
+            <div id="selectText">도움되는 컨텐츠를 추천하기 위해서 <br>아래의 선택지 중 공감되는 말을 선택해주세요.</div>
+            <div id="max3">(최대 3개)</div>
+            <div class="seletion-parent">
+                <div id="s1" class="seletion"></div>
+                <div id="s2" class="seletion"></div>
+                <div id="s3" class="seletion"></div>
+                <div id="s4" class="seletion"></div>
+                <input id="s5" class="seletion input" placeholder="직접 입력해주세요."></input>
+                <div class = "errTxt"></div>
+                <input id="s6" class="seletion input" placeholder="직접 입력해주세요."></input>
+                <div class = "errTxt"></div>
+                <input id="s7" class="seletion input" placeholder="직접 입력해주세요."></input>
+                <div class = "errTxt"></div>
+                <button id="addSeletion">+</button>
+            </div>
+            <button type="button" id="btn">추천받기</button>`
+            body.appendChild(container);
+
+            // 제목과 선택지
+            selection = document.querySelectorAll('.seletion');
+            btn = document.querySelector('#btn');
+            feeling = document.querySelector('#feeling');
+            addSeletion = document.querySelector('#addSeletion');
+
+            // 에러메시지 
+            errMessages = document.querySelectorAll('.errTxt');
+
+            console.log(data.body.emotion);
+            switch (data.body.emotion) {
+                case 'joy':
+                    feeling.innerHTML = '행복한';
+                    break;
+                case 'anger':
+                    feeling.innerHTML = '화난';
+                    break;
+                case 'disgust':
+                    feeling.innerHTML = '역겨운';
+                    break;
+                case 'sadness':
+                    feeling.innerHTML = '슬픈';
+                    break;
+                case 'fear':
+                    feeling.innerHTML = '화난';
+                    break;
             }
 
-            // 모달에 정보 넣기
-            for (let i = 0; i < 4; i++) {    
-                modalTitle[i].innerHTML = body.data[i][0].title;
-                modalImg[i].style.backgroundImage = "url(" + body.data[i][0].img + ")";
-                hover[i].innerHTML = body.data[i][0].description;   // 호버에 설명 넣음
-                modal.style.display = 'flex';
+            for (let i = 0; i < 4; i++) { // 4개는 api로 받아서 넣는다
+                selection[i].innerHTML = data.body.sentences[i][0].Content;    // 아싸리 태그를 집어너라
+                feelingData[i] = data.body.sentences[i][0];
             }
-            
-            //window.location.href = '2.html';
-        }
-        console.log('-----------------');
-    });
 
-    // 모달 확인 버튼
-    let chosenArr = [];
-    modalOkBtn.addEventListener('click', function() {
-        for(let i = 0; i < 4; i++) {
-            if(modalContent[i].classList.contains('chosenContent')) {
-                chosenArr.push(i);
-            }
-        }
-        for (let i = 0; i < chosenArr.length; i++) {
-            console.log(body.data[chosenArr[i]][0].title);
-        }
-        console.log('-----------');
-        // 배열 비우기전에 넘기면 될듯 
-        chosenArr = [];
-        location.href = '2.html';
-    });
+            console.log(data);
+            //console.log(data.body.sentences[0][0].Content);
+            //console.log('userId = ', localStorage.getItem('userId'))
+            //console.log('historyId = ', localStorage.getItem('historyId'))
+            init();
+        })
 
 
-    // 모달 닫기 버튼
-    closeBtn.addEventListener('click', function() {
-        modal.style.display = 'none';
-        chosenArr = [];
-        for(let i = 0; i < 4; i++) {
-            modalContent[i].classList.remove('chosenContent');
-        }
-    });
+
+
 }
 
 

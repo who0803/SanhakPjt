@@ -16,7 +16,7 @@
             position: relative;
             min-width: 1100px;
         }
-        #container {
+        .container {
             font-weight: bolder;
             text-align: center;
             min-width: 400px;
@@ -198,6 +198,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            
         }
         #modalOkBtn {
             justify-self: center;
@@ -213,25 +214,43 @@
             transform: scale(1.3);
             background-color: rgb(57, 214, 183);
         }
+        /*추가버튼*/
+        #s6, #s7 {
+            display: none;
+        }
+        #addSeletion {
+            width: 30px;
+            height: 30px;
+            font-size: 1rem;
+            font-weight: bolder;
+            border-radius: 50px;
+            color: white;
+            background-color: rgb(57, 214, 183);
+        }
+        /*로그아웃*/
+        #logout {
+            position: absolute;
+            padding: 10px;
+            border: 3px rgb(26, 188, 156) solid;
+            font-size: 1rem;
+            color: rgb(26, 188, 156);
+            cursor: pointer;
+            left: 20px;
+            top: 20px;
+        }
+        /*에러메시지*/
+        .errTxt {
+            color: red;
+            margin-top: -12px;
+            margin-bottom: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div id="body">
+        <div id="logout">logout</div>
         <div id="guest"></div>
-        <div id="container">
-            <h1 onclick="location.href = 'index.html'">지금 뭐하지?</h1>
-            <h2 id="feelingTxt">지금 <span id="feeling"></span> 기분인 것 같아요.</h2>
-            <div id="selectText">도움되는 컨텐츠를 추천하기 위해서 <br>아래의 선택지 중 공감되는 말을 선택해주세요.</div>
-            <div id="max3">(최대 3개)</div>
-            <div class="seletion-parent">
-                <div id="s1" class="seletion"></div>
-                <div id="s2" class="seletion"></div>
-                <div id="s3" class="seletion"></div>
-                <div id="s4" class="seletion"></div>
-                <input id="s5" class="seletion input" placeholder="입력해주세요."></input>
-            </div>
-            <button type="button" id="btn">추천받기</button>
-        </div> 
     </div>
 
     <!--모달-->
