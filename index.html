@@ -216,6 +216,7 @@
             background-color: rgb(50, 199, 169);
             font-size: 1rem;
             border-radius: 50px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -224,7 +225,7 @@
     <div class="body">
         <div id="login" class="log" onclick="location.href = 'login.html'">login</div>
         <div id="logout" class="log">logout</div>
-        <div id="guest"></div>
+        <div id="guest" onclick="location.href = 'guestInfo.html'"></div>
         <div id="container">
             <div id="searchContainer">
                 <h1 onclick="location.href = 'index.html'">지금 뭐하지?</h1>
@@ -356,7 +357,7 @@
 
                 if (textMessage.textContent === '' && selectMessage.textContent === '') {    // 텍스트도 입력받았고 컨텐츠도 선택했다면
                     textMessage.innerHTML = '분석중입니다.';
-                    fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences", {
+                    fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences/init", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",

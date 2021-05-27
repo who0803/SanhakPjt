@@ -83,19 +83,35 @@ else {  // 로그인 되어있을 경우 실행
     // errMessages
     let errMessages = [];
 
+    
+
+
     function init() {
         // 선택지 이벤트 리스너    
         selection.forEach(function (e) {  // 이런식으로 포문 돌려서 핸들러 추가
             e.addEventListener('click', function (e) { // 인덱스로 접근
+                /*
                 beforeCount = 0;
-                for (var i = 0; i < selection.length; i++) {    /* 선택전 카운트의 개수 */
-                    if (selection[i].classList.contains('active')) {    /* 하나씩 다 검사 */
+                for (var i = 0; i < selection.length; i++) {    // 선택전 카운트의 개수 
+                    if (selection[i].classList.contains('active')) {    // 하나씩 다 검사 
                         beforeCount++;
                     }
                 }
                 //console.log("1: " + beforeCount);
-                if (beforeCount === 3 && !(e.currentTarget.classList.contains('active'))) return; /*active가 이미 3개있는데 눌린거 말고 다른 거 눌리면*/
+                if (beforeCount === 1 && !(e.currentTarget.classList.contains('active'))) return; //active가 이미 3개있는데 눌린거 말고 다른 거 눌리면
                 else e.currentTarget.classList.toggle('active');
+                */
+
+                // 누르면 액티브된거 다지우고
+                for (var i = 0; i < selection.length; i++) {     /* 하나씩 다 검사 */
+                    if (selection[i].classList.contains('active')) { // 활성화된거 
+                        if (selection[i] !== e.currentTarget)        // 이미 활성화된거 누르지 않았을 경우에   
+                            selection[i].classList.remove('active'); // 지움
+                    }
+                }
+                e.currentTarget.classList.toggle('active');   // 누른거만 선택됨
+
+
 
                 afterCount = 0;
                 for (var i = 0; i < selection.length; i++) {    /* 선택후 카운트의 개수 */
@@ -114,6 +130,8 @@ else {  // 로그인 되어있을 경우 실행
         });
 
 
+        // 4개 컨텐츠 담을 배열
+        let contentsArr = [];
         
         // 감정선택 확인버튼
         btn.addEventListener('click', function () {
@@ -148,22 +166,25 @@ else {  // 로그인 되어있을 경우 실행
                     if (selection[i].classList.contains('active')) {    /* 하나씩 다 검사 */
 
                         
-                        if (selection[i].classList.contains('input')) {
+                        if (selection[i].classList.contains('input')) { // 사용자입력한부분
                             chosenTxtArr.push({
                                 id: i,
                                 text: selection[i].value
                             });
+
                         }
                         else {
-                            chosenTxtArr.push({
+                            chosenTxtArr.push({ // 기존 선택지
                                 id: i,
                                 text: selection[i].textContent
                             });
                         }
+
+                        
                     }
                 }
                 console.log('chosenTxtArr = ', chosenTxtArr);
-                fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/recommendations", {
+                fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences/goal", { //
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -171,38 +192,62 @@ else {  // 로그인 되어있을 경우 실행
                     body: JSON.stringify({
                         "userId": localStorage.getItem('userId'),
                         "historyId": localStorage.getItem('historyId'),
-                        "selection": chosenTxtArr
+                        "sentence": chosenTxtArr[0].text,
                     }),
                 })
                     .then((response) => response.json())
                     .then((data) => {
-                        console.log('data.body.sentences = ',data.body.sentences);
+                        console.log('chosenTxtArr[0].text = ',chosenTxtArr[0].text);
                         if (data.body.success) { // 에러없이 응답이 잘왔으면
                             // 모달에 정보 넣기
-                            for (let i = 0; i < 4; i++) {
-                                modalTitle[i].innerHTML = data.body.contents[i].title;
-                                modalImg[i].style.backgroundImage = "url(" + data.body.contents[i].img + ")";
-                                hover[i].innerHTML = data.body.contents[i].desc;   // 호버에 설명 넣음
-                                modal.style.display = 'flex';
+                            console.log(data.body);
+                            if (data.body.type === 'movie') { // 영화면
+                                for (let i = 0; i < 4; i++) {
+                                    modalTitle[i].innerHTML = data.body.contents[i].title;
+                                    modalImg[i].style.backgroundImage = "url(http://ec2-3-34-188-182.ap-northeast-2.compute.amazonaws.com/movie/" + data.body.contents[i].idx + ".jpg)";
+                                    hover[i].innerHTML = data.body.contents[i].description;   // 호버에 설명 넣음
+                                    modal.style.display = 'flex';
+                                    
+                                    // 배열 만들기
+                                    contentsArr.push({
+                                        'idx': String(data.body.contents[i].idx),
+                                        'title': data.body.contents[i].title,
+                                        'description': data.body.contents[i].description,
+                                    });
+                                }
                             }
+                            else {  // 책이면
+                                for (let i = 0; i < 4; i++) {
+                                    modalTitle[i].innerHTML = data.body.contents[i].title;
+                                    modalImg[i].style.backgroundImage = "url(http://ec2-3-34-188-182.ap-northeast-2.compute.amazonaws.com/book" + data.body.contents[i].idx + ".jpg)";
+                                    hover[i].innerHTML = data.body.contents[i].description;   // 호버에 설명 넣음
+                                    modal.style.display = 'flex';
+
+                                    // 배열 만들기
+                                    contentsArr.push({
+                                        'idx': String(data.body.contents[i].idx),
+                                        'title': data.body.contents[i].title,
+                                        'description': data.body.contents[i].description,
+                                    });
+                                }
+                            }
+                            
                         }
                         else {  // 분석할 수 없는 문장이 오면
                             
-                            for (let i = 0; i < data.body.sentences.length; i++) {
-                                switch (data.body.sentences[i].sentence.id) {
-                                    case 4:
-                                        errMessages[0].style.display = 'block';
-                                        errMessages[0].innerHTML = data.body.sentences[i].message;
-                                        break;
-                                    case 5:
-                                        errMessages[1].style.display = 'block';
-                                        errMessages[1].innerHTML = data.body.sentences[i].message;
-                                        break;
-                                    case 6:
-                                        errMessages[2].style.display = 'block';
-                                        errMessages[2].innerHTML = data.body.sentences[i].message;
-                                        break;
-                                }
+                            switch (chosenTxtArr[0].id) { //data.body.sentences[i].sentence.id
+                                case 4:
+                                    errMessages[0].style.display = 'block';
+                                    errMessages[0].innerHTML = data.body.message;
+                                    break;
+                                case 5:
+                                    errMessages[1].style.display = 'block';
+                                    errMessages[1].innerHTML = data.body.message;
+                                    break;
+                                case 6:
+                                    errMessages[2].style.display = 'block';
+                                    errMessages[2].innerHTML = data.body.message;
+                                    break;
                             }
                         }
 
@@ -239,19 +284,53 @@ else {  // 로그인 되어있을 경우 실행
 
         // 모달 확인 버튼
         let chosenArr = [];
+        let contentsArr2 = [];  // 넘겨줄거
         modalOkBtn.addEventListener('click', function () {
             for (let i = 0; i < 4; i++) {
                 if (modalContent[i].classList.contains('chosenContent')) {
                     chosenArr.push(i);
                 }
             }
-            for (let i = 0; i < chosenArr.length; i++) {
-                console.log(body.data[chosenArr[i]][0].title);
-            }
             console.log('-----------');
+            //선택된배열 골라내기
+            for (let i = 0; i < chosenArr.length; i++) {
+                contentsArr2.push(contentsArr[chosenArr[i]]);
+            }
+            
+
+            fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/contents/select", { //
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        "userId": localStorage.getItem('userId'),
+                        "historyId": localStorage.getItem('historyId'),
+                        "selection": contentsArr2,
+                    }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.body.success) {    // 정상이면
+                            
+                            contentsArr2 = [];
+                            location.href = '2.html'; // 다음페이지로 넘어가
+                            //console.log(data.body.message);
+                        }
+                        else {
+                            //console.log(contentsArr2);
+                            //console.log(contentsArr);
+                            console.log('data.body : ' + data.body);
+                            contentsArr2 = [];
+                            // 하나도 선택안하면 아무것도 안일어남
+                        }
+                    })
+
+
+
             // 배열 비우기전에 넘기면 될듯 
             chosenArr = [];
-            location.href = '2.html';
+            
         });
 
 
@@ -264,11 +343,14 @@ else {  // 로그인 되어있을 경우 실행
             }
         });
     }
-
+//https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences?userId=userId&historyId=historyId
 
     fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences?userId=" + localStorage.getItem('userId') + "&historyId=" + localStorage.getItem('historyId'))
         .then((response) => response.json())
         .then((data) => {
+            console.log(data);
+            console.log(localStorage.getItem('userId'));
+            console.log(localStorage.getItem('historyId'));
             //feeling.innerHTML = data.body.emotion;    // 감정 배열 출력
 
             const body = document.querySelector('#body');
@@ -279,7 +361,7 @@ else {  // 로그인 되어있을 경우 실행
                 `<h1 onclick="location.href = 'index.html'">지금 뭐하지?</h1>
             <h2 id ="feelingTxt">지금 <span id ="feeling"></span> 기분인 것 같아요.</h2>
             <div id="selectText">도움되는 컨텐츠를 추천하기 위해서 <br>아래의 선택지 중 공감되는 말을 선택해주세요.</div>
-            <div id="max3">(최대 3개)</div>
+            <div id="max3">(1개)</div>
             <div class="seletion-parent">
                 <div id="s1" class="seletion"></div>
                 <div id="s2" class="seletion"></div>
@@ -325,7 +407,7 @@ else {  // 로그인 되어있을 경우 실행
             }
 
             for (let i = 0; i < 4; i++) { // 4개는 api로 받아서 넣는다
-                selection[i].innerHTML = data.body.sentences[i][0].Content;    // 아싸리 태그를 집어너라
+                selection[i].innerHTML = data.body.sentences[i][0].content;    // 아싸리 태그를 집어너라
                 feelingData[i] = data.body.sentences[i][0];
             }
 
