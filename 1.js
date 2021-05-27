@@ -208,7 +208,7 @@ else {  // 로그인 되어있을 경우 실행
                                     modalImg[i].style.backgroundImage = "url(" + data.body.contents[i].image + ")";
                                     hover[i].innerHTML = data.body.contents[i].description;   // 호버에 설명 넣음
                                     modal.style.display = 'flex';
-                                    
+                                    console.log(data.body.contents[i].image);
                                     // 배열 만들기
                                     contentsArr.push({
                                         'idx': String(data.body.contents[i].idx),
