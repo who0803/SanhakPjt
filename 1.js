@@ -205,7 +205,7 @@ else {  // 로그인 되어있을 경우 실행
                                 console.log('영화!');
                                 for (let i = 0; i < 4; i++) {
                                     modalTitle[i].innerHTML = data.body.contents[i].title;
-                                    modalImg[i].style.backgroundImage = "url(http://ec2-3-34-188-182.ap-northeast-2.compute.amazonaws.com/movie/" + data.body.contents[i].idx + ".jpg)";
+                                    modalImg[i].style.backgroundImage = "url(" + data.body.contents[i].image + ")";
                                     hover[i].innerHTML = data.body.contents[i].description;   // 호버에 설명 넣음
                                     modal.style.display = 'flex';
                                     
@@ -221,7 +221,7 @@ else {  // 로그인 되어있을 경우 실행
                                 console.log('책!');
                                 for (let i = 0; i < 4; i++) {
                                     modalTitle[i].innerHTML = data.body.contents[i].title;
-                                    modalImg[i].style.backgroundImage = "url(http://ec2-3-34-188-182.ap-northeast-2.compute.amazonaws.com/book/" + data.body.contents[i].idx + ".jpg)";
+                                    modalImg[i].style.backgroundImage = "url(" + data.body.contents[i].image + ")";
                                     hover[i].innerHTML = data.body.contents[i].description;   // 호버에 설명 넣음
                                     modal.style.display = 'flex';
 
