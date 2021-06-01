@@ -223,7 +223,7 @@
 
 <body>
     <div class="body">
-        <div id="login" class="log" onclick="location.href = 'index.html'">login</div>
+        <div id="login" class="log" onclick="location.href = 'login.html'">login</div>
         <div id="logout" class="log">logout</div>
         <div id="guest" onclick="location.href = 'guestInfo.html'"></div>
         <div id="container">
@@ -288,7 +288,7 @@
         logout.addEventListener('click', function () { // 로그아웃 누르면
             localStorage.removeItem('userId');
             localStorage.removeItem('userName');
-            location.href = 'index.html';
+            location.href = 'login.html';
         });
         
         // 문

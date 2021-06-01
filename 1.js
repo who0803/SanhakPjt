@@ -6,7 +6,7 @@ if (!localStorage.getItem('userId')) {
     loginJudge.style.fontSize = '3rem';
     loginJudge.style.textAlign = 'center';
     setTimeout(function () {
-        window.location.href = 'index.html'; // 로그인 안돼있으면 로그인 페이지로 이동
+        window.location.href = 'login.html'; // 로그인 안돼있으면 로그인 페이지로 이동
     }, 3000);
 }
 else {  // 로그인 되어있을 경우 실행
@@ -36,7 +36,7 @@ else {  // 로그인 되어있을 경우 실행
     logout.addEventListener('click', function () { // 로그아웃 누르면 로그아웃하고 로그인페이지로 넘어가
         localStorage.removeItem('userId');
         localStorage.removeItem('userName');
-        location.href = 'index.html';
+        location.href = 'login.html';
     });
 
     // 회원정보
