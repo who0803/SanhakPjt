@@ -6,391 +6,156 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="default.css">
-    <title>지금 뭐하지?</title>
+    <title>Document</title>
     <style>
-        .body {
+        .login-box {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            width: 100vw;
             height: 100vh;
             background: ivory;
-            position: relative;
             min-width: 1100px;
         }
 
-        #container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 80vw;
-            height: 80vh;
-        }
-
-        #searchContainer {
-            display: flex;
-            flex-direction: column;
-            min-width: 50%;
-        }
-
         h1 {
-            cursor: pointer;
-            font-size: 3rem;
-            color: rgb(26, 188, 156);
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .search {
-            display: flex;
-            height: 3rem;
-        }
-
-        #text {
-            min-width: 100%;
-            border: rgb(26, 188, 156) 2px solid;
-        }
-
-        #btn {
-            display: block;
-            min-width: 45px;
-            color: white;
-            background: rgb(26, 188, 156);
-            border: none;
-            font-size: 1rem;
-        }
-
-        .message {
-            color: red;
-            text-align: center;
-        }
-
-        /*///////////////////////////////////////////*/
-        #doorContainer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-width: 50%;
-        }
-
-        #doorTitle {
-            font-size: 1.5rem;
-            margin-top: 4rem;
+            font-size: 4rem;
             margin-bottom: 1rem;
             color: rgb(26, 188, 156);
-            font-weight: bolder;
+            cursor: pointer;
         }
 
-        .stage {
-            /*배경*/
+        h2 {
             display: flex;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: rgb(150, 143, 143);
+            align-self: flex-start;
+        }
+
+        img {
+            align-self: center;
+            margin-right: 0.7rem;
+            width: 2rem;
+        }
+
+        #loginContainer {
+            background: white;
+            margin-top: 2rem;
+            border: 2px solid rgb(26, 188, 156);
+            box-sizing: content-box;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 200px;
-            height: 150px;
+            width: 300px;
+            height: 300px;
+            /*min-width: 200px;*/
         }
 
-        .door {
-            position: relative;
-            /*기준점이 되도록*/
-            width: 100px;
-            height: 150px;
-        }
-
-        .door-back {
-            /*일분이 나오는 입구*/
-            box-sizing: border-box;
-            overflow: hidden;
-            /*일분이 밖으로 나가도 안보이게*/
-            position: absolute;
-            /*겹치게*/
-            left: 0;
-            top: 0;
+        .in {
+            border: none;
+            border-bottom: 2px solid rgb(26, 188, 156);
+            display: block;
             width: 100%;
-            /*부모크기 꽉 채우겠다*/
-            height: 100%;
-            background: rgb(26, 188, 156);
-            border: 5px black solid;
+            height: 20%;
+            margin-bottom: 1rem;
         }
 
-        .ilbuni {
-            position: absolute;
-            left: 0;
-            /*위치는 왼쪽 아래기준*/
-            bottom: 0;
-            width: 100px;
-            /*일분이 크기 고정*/
-            height: 100px;
-            background-repeat: no-repeat;
-            background-position: 50% 100%;
-            /*백그라운드 이미지 위치는 가운데 아래 center bottom*/
-            background-size: contain;
-
-            /*transform에서 3d가 붙은 애들은 하드웨어 가속을 함. translate3d쓰면 퍼포먼스 향상시킴*/
-            /*translate 쓸 때 %를 쓰면 편하다. 오브젝트(ilbuni)의 크기를 100%로 잡는다*/
-            transform: translate3d(100%, 0, 0);
-            /*처음에는 아예 안보이는 상태*/
-            transition: 0.5s 0.5s;
-            /*duration  delay*/
-        }
-
-        /*이미지 넣어줌*/
-        .door:nth-child(1) .ilbuni {
-            background-image: url(img/book.png);
-        }
-
-        .door:nth-child(2) .ilbuni {
-            background-image: url(img/movie.png);
-        }
-
-        .door-body {
-            /*문*/
-            position: absolute;
-            /*문 겹침*/
-            left: 0;
-            top: 0;
+        .btn {
             width: 100%;
-            height: 100%;
-            transition: 0.5s;
-            /*문열리는 속도*/
-            transform-origin: 0%;
-            /*기준점은 문 맨왼쪽*/
-            cursor: pointer;
-        }
-
-        .door:nth-child(1) .door-body {
-            position: relative;
-            background-image: url(img/door.png);
-            background-repeat: no-repeat;
-            background-size: 230px 190px;
-            ;
-            background-position: -65px -20px;
-        }
-
-        .door:nth-child(2) .door-body {
-            position: relative;
-            background-image: url(img/door.png);
-            background-repeat: no-repeat;
-            background-size: 230px 190px;
-            ;
-            background-position: -66px -20px;
-        }
-
-        .door-opened .door-body {
-            /* 문 열림 */
-            transform: perspective(800px) rotateY(-110deg);
-            /*transform안에 쓰면 시점 차이가 없다. -인 이유는 문을 당기는 거라서*/
-        }
-
-        .door-opened .ilbuni {
-            transform: translate3d(0, 0, 0);
-            /*문열리면 일분이 나타남*/
-        }
-
-        .contentName {
-            position: absolute;
-            left: 20%;
-            top: 25%;
-            font-size: 20px;
-            font-weight: bolder;
-        }
-
-        /*로그인*/
-        .log {
-            position: absolute;
-            padding: 10px;
-            border: 3px rgb(26, 188, 156) solid;
-            font-size: 1rem;
-            color: rgb(26, 188, 156);
-            cursor: pointer;
-            left: 20px;
-            top: 20px;
-        }
-        #guest {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            padding: 10px;
+            height: 15%;
+            display: block;
             color: white;
-            background-color: rgb(50, 199, 169);
             font-size: 1rem;
-            border-radius: 50px;
-            cursor: pointer;
+            background: rgb(26, 188, 156);
+            border: none;
+            border-radius: 10px;
+            
+        }
+        .Non-members {
+            margin-top: 10px;
+            background: rgb(26, 188, 34);
+        }
+        a {
+            align-self: flex-start;
+            margin-bottom: 1rem;
+            text-decoration: none;
+            color: rgb(150, 143, 143);
+        }
+
+        #errMessage {
+            margin-top: -0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.5rem;
+            color: red;
         }
     </style>
 </head>
 
 <body>
-    <div class="body">
-        <div id="login" class="log" onclick="location.href = 'login.html'">login</div>
-        <div id="logout" class="log">logout</div>
-        <div id="guest" onclick="location.href = 'guestInfo.html'"></div>
-        <div id="container">
-            <div id="searchContainer">
-                <h1 onclick="location.href = 'index.html'">지금 뭐하지?</h1>
-                <div class="search">
-                    <input type="text" id="text" placeholder="지금 생각나는 말을 입력하세요." autofocus>
-                    <button type="button" id="btn">입력</button>
-                </div>
-                <div id="textMessage" class="message"></div>
-            </div>
+    <div class="login-box">
+        <header>
+            <h1 onclick="location.href = 'index.html'">지금 뭐하지?</h1>
+        </header>
 
-            <!--문-->
-            <div id="doorContainer">
-                <div id="doorTitle">원하시는 컨텐츠를 선택해주세요!</div>
-                <div class="stage">
-                    <div class="door" data-value="book">
-                        <div class="door-back">
-                            <div class="ilbuni"></div>
-                        </div>
-                        <div class="door-body">
-                            <div class="contentName">Book</div>
-                        </div>
-                    </div>
-                    <div class="door" data-value="movie">
-                        <div class="door-back">
-                            <div class="ilbuni"></div>
-                        </div>
-                        <div class="door-body">
-                            <div class="contentName">Movie</div>
-                        </div>
-                    </div>
-                </div>
-                <div id="selectMessage" class="message"></div>
-            </div>
-
+        <div id="loginContainer">
+            <h2><img src="img/icon.png">Login</h2>
+            <input type="text" class="in" name="id" placeholder="Username" id="idTxt" autofocus>
+            <input type="password" class="in" name="pwd" id="password" placeholder="Password">
+            <div id="errMessage"></div>
+            <a href="register.html">☛ Sign up</a>
+            <button type="button" class="btn members">Login</button>
+            <button type="button" class="btn Non-members">비회원 Login</button>
         </div>
     </div>
     <script>
-        const btn = document.querySelector('#btn');
-        let text = document.querySelector('#text');
-        let textMessage = document.querySelector('#textMessage');   // 아무글도 입력안했을 때
-        let selectMessage = document.querySelector('#selectMessage');   // 아무 문도 선택안했을 때
-        const login = document.querySelector('#login');
-        const logout = document.querySelector('#logout');
-        const guest = document.querySelector('#guest');
+        // 패스워드 밑에 가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.
+        const memberBtn = document.querySelector('.members');
+        const nonMemberBtn = document.querySelector('.Non-members');
+        const idTxt = document.querySelector('#idTxt');
+        const password = document.querySelector('#password');
+        let errMessage = document.querySelector('#errMessage');
 
-
-        // 회원정보, 로그인, 로그아웃 보여짐 유무 판단
-        if (localStorage.getItem('userName')) { // 로그인 되있으면
-            logout.style.display = 'block';
-            login.style.display = 'none';
-            guest.innerHTML = localStorage.getItem('userName')+" 님";
-        }
-        else {// 제일 처음에 로그인 안되어있는 상태
-            login.style.display = 'block';
-            logout.style.display = 'none';
-            guest.style.display = 'none';
-        }
-
-        // 로그아웃
-        logout.addEventListener('click', function () { // 로그아웃 누르면
-            localStorage.removeItem('userId');
-            localStorage.removeItem('userName');
-            guest.style.display = 'none';
-            login.style.display = 'block';
-            logout.style.display = 'none';
-        });
-        
-        // 문
-        const stageElem = document.querySelector('.stage');	// 부모태그
-        // 현재 활성화된 아이템을 저장
-        let currentItem;	// 공유되는 변수// door
-
-
-
-        // 문 이벤트//////////
-        // 활성화
-        function activate(elem) {
-            elem.classList.add('door-opened');
-            currentItem = elem;	// 열린거 갱신해줘야함
-        }
-
-        // 비활성화
-        function inactivate(elem) {
-            elem.classList.remove('door-opened');
-        }
-
-        function doorHandler(e) {	// EventListener로 실행이 되면 자동으로 첫번째 매개변수 자리에는 이벤트라는 특별한 객체 들어옴
-            let targetElem = e.target;	// 클릭한 거
-            console.log(targetElem);
-            if (currentItem) {	// 활성화된 것이 뭐라도 있으면
-                inactivate(currentItem);	// 비활성화 시키고
+        memberBtn.addEventListener('click', function () {
+            if (idTxt.value === '') { // 아이디를 입력하지 않음
+                errMessage.innerHTML = '아이디를 입력해주세요.';
             }
-
-            if (targetElem.classList.contains('contentName')) { // book, movie텍스트 누를 경우에도 작동하게
-                targetElem = targetElem.parentNode;
-            }
-            // 아 열린문을 눌렀을 때 닫히기만 하는 이유는 누른게 door-body가 아니고 door-back이나 일분이이기 때문에
-            if (targetElem.classList.contains('door-body')) {	// 클릭한 것이 문일 때만 문 활성화시킨다
-                activate(targetElem.parentNode);// 클릭한 door-body가 아니고 부모태그인 door에 door-opened가 붙어야함
-                selectMessage.innerHTML = '';
-            }
-        }
-
-        stageElem.addEventListener('click', doorHandler);
-
-        console.log(localStorage.getItem('userId'));
-
-
-
-        // 검색버튼
-        btn.addEventListener('click', function () {
-
-            if (localStorage.getItem('userId')) {    // 로그인 했으면
-                
-                if (text.value === '') { // 아무것도 안입력했으면
-                    textMessage.innerHTML = '지금 생각나는 말을 입력해주세요!';
-                }
-                else textMessage.innerHTML = '';
-
-
-                // 문활성화 된것이 없다는 메시지 
-                if (!currentItem) {// 처음에 활성화된 것이 없으면
-                    selectMessage.innerHTML = '컨텐츠를 선택해주세요';
-                }
-                else if (!currentItem.classList.contains('door-opened')) {
-                    selectMessage.innerHTML = '컨텐츠를 선택해주세요';
-                }
-
-
-                if (textMessage.textContent === '' && selectMessage.textContent === '') {    // 텍스트도 입력받았고 컨텐츠도 선택했다면
-                    textMessage.innerHTML = '분석중입니다.';
-                    fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences/init", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            "sentence": text.value,    // 사용자가 입력한 문장
-                            "type": currentItem.dataset.value,  // 활성화된 문의 정보
-                            "userId": localStorage.getItem('userId')
-                        }),
-                    })
-                        .then((response) => response.json())
-                        .then((data) => {
-                            console.log('data = ', data);
-                            if(!data.body.success) {  // 에러일 경우
-                                textMessage.innerHTML = data.body.message;
-                            }
-                            else {
-                                localStorage.setItem('historyId', data.body.historyId)// 브라우저에 저장
-                                location.href = '1.html';
-                            }
-                        })
-
-                }
-
+            else if (password.value === '') {    // 비밀번호를 입력하지 않음
+                errMessage.innerHTML = '비밀번호를 입력해주세요.';
             }
             else {
-                textMessage.innerHTML = '로그인 해주세요.';
+                fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/signin", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        "username": idTxt.value,
+                        "password": password.value
+                    }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.statusCode === 200) {   // 로그인 성공하면
+                            localStorage.setItem('userId', data.body.userId)// 브라우저에 저장
+                            localStorage.setItem('userName', idTxt.value)
+                            location.href = 'main.html';
+                        }
+                        else {  // 로그인 실패하면
+                            errMessage.innerHTML = '가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.';
+                        }
+                    })
             }
+
         });
 
-
-
-
+        nonMemberBtn.addEventListener('click', function() {
+            localStorage.setItem('userId', -1)// 브라우저에 저장
+            location.href = 'main.html';
+        });
     </script>
 </body>
 
