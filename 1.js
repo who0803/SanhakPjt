@@ -59,14 +59,14 @@ else {  // 로그인 되어있을 경우 실행
     let selection;
     let btn;
     let feeling;
-    let addSeletion;
+    
 
     let beforeCount = 0;  /* 누르기 전 상태.  선택전 카운트의 개수 */
     let afterCount = 0; /* 버튼. 선택후 카운트의 개수 */
     let feelingData = [];    // 감정 객체 데이터 배열
 
     // errMessages
-    let errMessages = [];
+    let errMessages;
 
     
 
@@ -75,17 +75,7 @@ else {  // 로그인 되어있을 경우 실행
         // 선택지 이벤트 리스너    
         selection.forEach(function (e) {  // 이런식으로 포문 돌려서 핸들러 추가
             e.addEventListener('click', function (e) { // 인덱스로 접근
-                /*
-                beforeCount = 0;
-                for (var i = 0; i < selection.length; i++) {    // 선택전 카운트의 개수 
-                    if (selection[i].classList.contains('active')) {    // 하나씩 다 검사 
-                        beforeCount++;
-                    }
-                }
-                //console.log("1: " + beforeCount);
-                if (beforeCount === 1 && !(e.currentTarget.classList.contains('active'))) return; //active가 이미 3개있는데 눌린거 말고 다른 거 눌리면
-                else e.currentTarget.classList.toggle('active');
-                */
+                
 
                 // 누르면 액티브된거 다지우고
                 for (var i = 0; i < selection.length; i++) {     /* 하나씩 다 검사 */
@@ -107,13 +97,7 @@ else {  // 로그인 되어있을 경우 실행
             });
         });
 
-        // 선택지 추가버튼
-        let add = 5;
-        addSeletion.addEventListener('click', function () {
-            selection[add++].style.display = 'block';
-            if (add === 7) addSeletion.style.display = 'none';
-        });
-
+        
 
         // 4개 컨텐츠 담을 배열
         let contentsArr = [];
@@ -121,10 +105,14 @@ else {  // 로그인 되어있을 경우 실행
         // 감정선택 확인버튼
         btn.addEventListener('click', function () {
             
+            /*
             for(let i = 0; i < 3; i++) {// 에러메시지 리셋
                 errMessages[i].innerHTML = '';
                 errMessages[i].style.display = 'none';   
             }
+            */
+            errMessages.innerHTML = '';
+            errMessages.style.display = 'none';   
 /*
             let errFlag = 0;
             for(let i = 0; i < selection.length; i++) {
@@ -223,6 +211,7 @@ else {  // 로그인 되어있을 경우 실행
                         }
                         else {  // 분석할 수 없는 문장이 오면
                             
+                            /*
                             switch (chosenTxtArr[0].id) { //data.body.sentences[i].sentence.id
                                 case 4:
                                     errMessages[0].style.display = 'block';
@@ -236,7 +225,9 @@ else {  // 로그인 되어있을 경우 실행
                                     errMessages[2].style.display = 'block';
                                     errMessages[2].innerHTML = data.body.message;
                                     break;
-                            }
+                            }*/
+                            errMessages.style.display = 'block';
+                            errMessages.innerHTML = data.body.message;
                         }
 
 
@@ -331,7 +322,7 @@ else {  // 로그인 되어있을 경우 실행
             }
         });
     }
-//https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences?userId=userId&historyId=historyId
+
 
     fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/sentences?userId=" + localStorage.getItem('userId') + "&historyId=" + localStorage.getItem('historyId'))
         .then((response) => response.json())
@@ -358,23 +349,19 @@ else {  // 로그인 되어있을 경우 실행
                 <div id="s4" class="seletion"></div>
                 <input id="s5" class="seletion input" placeholder="직접 입력해주세요."></input>
                 <div class = "errTxt"></div>
-                <input id="s6" class="seletion input" placeholder="직접 입력해주세요."></input>
-                <div class = "errTxt"></div>
-                <input id="s7" class="seletion input" placeholder="직접 입력해주세요."></input>
-                <div class = "errTxt"></div>
-                <button id="addSeletion">+</button>
+                
             </div>
             <button type="button" id="btn">추천받기</button>`
             body.appendChild(container);
 
             // 제목과 선택지
-            selection = document.querySelectorAll('.seletion');
-            btn = document.querySelector('#btn');
+            selection = document.querySelectorAll('.seletion'); // 전체 선택지
+            btn = document.querySelector('#btn');               // 추천받기 버튼
             feeling = document.querySelector('#feeling');
-            addSeletion = document.querySelector('#addSeletion');
+            
 
             // 에러메시지 
-            errMessages = document.querySelectorAll('.errTxt');
+            errMessages = document.querySelector('.errTxt'); // 에러 메시지
 
             console.log(data.body.emotion);
             switch (data.body.emotion) {
