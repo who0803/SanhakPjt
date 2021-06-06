@@ -1,0 +1,336 @@
+#body {
+    display: flex;
+    flex-direction: column;
+    background: ivory;
+    min-width: 1100px;
+    min-height: 100vh;
+    
+}
+
+#topBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    color: white;
+    background: black;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.header {
+
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    align-items: center;
+    height: 90px;
+    border-bottom: 2px rgb(26, 188, 156) solid;
+    margin-bottom: 2rem;
+}
+
+.website-title {
+    justify-self: center;
+    grid-column: 2 / 3;
+    color: rgb(26, 188, 156);
+    font-size: 40px;
+    cursor: pointer;
+}
+
+/*로그아웃*/
+.log {
+    grid-column: 1 / 2;
+    justify-self: start;
+    padding: 10px;
+    border: 3px rgb(26, 188, 156) solid;
+    font-size: 1rem;
+    color: rgb(26, 188, 156);
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+/*회원정보*/
+#guest {
+    grid-column: 3 / 4;
+    justify-self: end;
+    padding: 10px;
+    color: white;
+    background-color: rgb(50, 199, 169);
+    font-size: 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+#textContainer {
+
+    width: 100%;
+    padding: 2rem;
+    color: white;
+    background-color: rgb(38, 228, 190);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-top: 10px black solid;
+    border-bottom: 10px black solid;
+}
+
+#contentNum {
+    color: black;
+}
+
+.footer {
+    background: rgb(238, 237, 237);
+    text-align: center;
+    border-top: 1px lightgray solid;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-top: 100px;
+}
+
+#contentContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 1100px;
+    min-width: 1100px;
+    min-height: 1120px;
+    align-self: center;
+}
+
+#recommendMessage {
+    font-size: 35px;
+    font-weight: bolder;
+    margin-bottom: 1rem;
+}
+
+#btn {
+    background: rgb(26, 188, 156);
+    color: white;
+    border: none;
+    height: 4rem;
+    cursor: pointer;
+    margin-top: 5rem;
+    font-size: 20px;
+}
+
+#btn:hover {
+    transform: scale(1.1);
+    background: rgb(32, 255, 186);
+    transition: 1s;
+}
+
+#contentTable {
+    display: flex;
+    flex-direction: column;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    border-left: 1px gray solid;
+    border-right: 1px gray solid;
+}
+
+.row {
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 4px gray solid;
+}
+
+.content {
+    flex-shrink: 0;
+    width: 230px;
+    height: 420px;
+    /*border: 1px gray solid;*/
+    display: flex;
+    flex-direction: column;
+    perspective: 500px;
+    position: relative;
+}
+
+.contentImg {
+    position: absolute;
+    width: 230px;
+    height: 331px;
+    cursor: pointer;
+    -webkit-backface-visibility: hidden;
+    /*사파리에서 사용하려면 이렇게*/
+    backface-visibility: hidden;
+    /*접두어 붙은 속성을 위에쓰고 표준을 밑에 써준다*/
+    transition: 1s;
+}
+
+.contentImgFront {
+    z-index: 1;
+    background-size: contain;
+    border: 5px gray solid;
+}
+
+.contentImgBack {
+    border: 5px gray solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+    font-size: 100px;
+    transform: rotateY(180deg);
+    background: black;
+
+}
+
+.frontReverse {
+    /*앞뒤 따로*/
+    transform: rotateY(180deg);
+}
+
+.backReverse {
+    transform: rotateY(360deg);
+    /*이미 180도 돌아가져 있기 때문에*/
+}
+
+.contentInfo {
+    position: absolute;
+    top: 331px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    height: 89px;
+
+}
+
+.contentTitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    height: 50%;
+    font-size: 20px;
+    font-weight: bolder;
+    padding-top: 10px;
+}
+
+.evaluationBox {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 50%;
+}
+
+.thumbs {
+    cursor: pointer;
+    display: flex;
+    width: 48%;
+    height: 100%;
+}
+
+.thumbsImg {
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 40%;
+    height: 100%;
+
+}
+
+.thumbsTxt {
+    justify-self: center;
+    align-self: center;
+    font-weight: bolder;
+    padding-left: 10px;
+}
+
+.recommendBadge {
+    display: none;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 200px;
+    height: 200px;
+    z-index: 2;
+    margin: -80px 0px 0px -80px;
+    transition: 1s;
+}
+
+.badgeTransform {
+    transition: 1s;
+    transform: scale(0.5);
+    transform-origin: 50% 50%;
+}
+
+.unvisibleMode {
+    display: none;
+}
+
+.not-scroll {
+    overflow: hidden;
+}
+/* modal */
+.modal {
+    display: none;
+    /*가운데 정렬*/
+    justify-content: center;
+    align-items: center;
+    
+    /*고정되면서 전체 차지*/
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+}
+#modalBox {
+
+    width: 90vw;
+    max-height: 700px;
+
+    /*화면 절반정도*/
+    padding: 2em;
+    border-radius: 1em;
+    background: white;
+}
+.modalDialog {
+    /*
+    position: fixed;
+    left: 0px;
+    top: 50px;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+#modalImg {
+    /*모달박스 안 이미지*/
+    border: 1px gray solid;
+    min-width: 191px;
+    min-height: 272px;
+    background-size: contain;
+    margin: 2rem 0;
+}
+#modaldescription {
+    overFlow-y : auto;
+    max-height: 180px;
+}
+#modalCloseBtn {
+    align-self: flex-end;
+    font-size: 2rem;
+    
+}
+
+#modalCloseBtn:hover {
+    color: red;
+}
+#loding {
+    width: 300px;
+    height: 300px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("img/loding.gif");
+}
