@@ -332,5 +332,5 @@
     height: 300px;
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url("img/loding.gif");
+    background-image: url("../img/loding.gif");
 }

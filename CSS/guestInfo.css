@@ -237,7 +237,7 @@
 }
 
 .movieSymbol {
-    background-image: url("img/movieSymbol.png");
+    background-image: url("../img/movieSymbol.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -252,7 +252,7 @@
 }
 
 .bookSymbol {
-    background-image: url("img/bookSymbol.png");
+    background-image: url("../img/bookSymbol.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
