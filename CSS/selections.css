@@ -10,7 +10,7 @@
 .container {
     font-weight: bolder;
     text-align: center;
-    min-width: 400px;
+    min-width: 500px;
 }
 #seletion-parent {
     display: flex;

@@ -168,7 +168,9 @@
     height: 100%;
 }
 
-
+.not-scroll {
+    overflow: hidden;
+}
 
 /* modal */
 .modal {
@@ -194,6 +196,7 @@
     align-items: center;
 
     width: 90vw;
+    max-height: 700px;
     /*화면 절반정도*/
     padding: 2em;
     border-radius: 1em;
@@ -208,7 +211,10 @@
     background-size: contain;
     margin: 2rem 0;
 }
-
+#modaldescription {
+    overFlow-y : auto;
+    max-height: 180px;
+}
 #modalCloseBtn {
     align-self: flex-end;
     font-size: 2rem;
