@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>지금 뭐하지?</title>
+</head>
+
+<body>
+    <script>
+            (function (){
+                const userId = localStorage.getItem('userId')
+                if(userId && userId != '-1'){
+                    location.replace('main.html')        
+                }else{
+                    location.replace('login.html')
+                }
+            })();
+    </script>
+</body>
+
+</html>

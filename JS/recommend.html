@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/default.css">
+    <link rel="stylesheet" href="CSS/recommend.css">
+    <title>지금 뭐하지?</title>
+
+</head>
+
+<body>
+    <div id="body">
+        <header class="header">
+            <div id="logout" class="log">logout</div>
+            <div id="login" class="log" onclick="location.href = 'login.html'">login</div>
+            <h1 class="website-title" onclick="location.href = 'main.html'">지금 뭐하지?</h1>
+            <div id="guest" onclick="location.href = 'guestInfo.html'"></div>
+        </header>
+        <div id="textContainer">
+            <div id="loding"></div>
+            <div id="recommendMessage"></div>
+            <!--여기도 영화면 영화 책이면 책 동적으로 넣기-->
+            <div id="contentNum"></div>
+            <!--몇개의 영화가 추천되었습니다.-->
+        </div>
+        <div id="contentContainer">
+            <div id="contentTable"></div>
+            <button id="btn">더보기 ⇩</button>
+        </div>
+        <div id="topBtn" style="cursor:pointer;" onclick="window.scrollTo(0,0);">TOP</div>
+        <footer class="footer">
+            산학프로젝트 8조 지금 뭐하지? <br>
+            팀장: 성우진 조원: 김혜영, 양아림, 박범준, 김현진
+        </footer>
+    </div>
+
+
+    <!--모달-->
+    <div class="modal">
+        <div id="modalBox">
+            <div class="modalDialog">
+                <button type="button" id="modalCloseBtn">☒</button>
+                <h1 id="modalTitle"></h1>
+                <div id="modalEtc"></div>
+                <figure id="modalImg"></figure>
+                <article id="modaldescription"></article>
+            </div>
+        </div>
+    </div>
+
+    <script src="JS/recommend.js"></script>
+</body>
+
+</html>
