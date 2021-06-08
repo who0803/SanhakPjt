@@ -283,3 +283,12 @@
     border-bottom: 2px gray solid;
     width: 60%;
 }
+
+#loding {
+    width: 350px;
+    height: 350px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("../img/loding.gif");
+    margin:0 auto;
+}

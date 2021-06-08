@@ -16,7 +16,7 @@ else {  // 로그인 되어있을 경우만 실행
     const bodyTag = document.querySelector('body');
     const guest = document.querySelector('#guest');
     const logout = document.querySelector('#logout');
-
+    const loding = document.querySelector('#loding');
     // 로그아웃
     logout.addEventListener('click', function () { // 로그아웃 누르면 로그아웃하고 로그인페이지로 넘어가
         localStorage.removeItem('userId');
@@ -37,7 +37,7 @@ else {  // 로그인 되어있을 경우만 실행
     fetch("https://zbzvef33kf.execute-api.ap-northeast-2.amazonaws.com/prod/users/preference/" + localStorage.getItem('userId'))
         .then((response) => response.json())
         .then((data) => {
-
+            loding.style.display = 'none';
             var contentsNum = data.body.data[0].length;   // 임시 컨텐츠 수
             console.log(data.body.data[0].length);
 
