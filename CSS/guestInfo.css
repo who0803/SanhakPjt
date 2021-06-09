@@ -25,7 +25,7 @@
 .header {
 
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
     height: 90px;
 
@@ -34,7 +34,7 @@
 
 .website-title {
     justify-self: center;
-    grid-column: 2 / 3;
+    grid-column: 3 / 5;
     color: rgb(26, 188, 156);
     font-size: 40px;
     cursor: pointer;
@@ -51,16 +51,29 @@
     cursor: pointer;
     margin-left: 20px;
 }
+/*추천페이지로 돌아가는 버튼*/
+#back {
+    position: absolute;
+    left: 100px;
+    top: 22px;
+    padding: 10px;
+    border: 3px rgb(26, 188, 156) solid;
+    font-size: 1rem;
+    color: rgb(26, 188, 156);
+    cursor: pointer;
+    
+}
 
 /*회원정보*/
 #guest {
-    grid-column: 3 / 4;
+    grid-column: 6 / 7;
     justify-self: end;
     padding: 10px;
     color: white;
     background-color: rgb(50, 199, 169);
     font-size: 1rem;
     border-radius: 50px;
+    margin-right: 20px;
 }
 
 
@@ -232,7 +245,7 @@
 
 .contentMenu {
     display: flex;
-
+    cursor: pointer;
     width: 50px;
     height: 40px;
     border: 2px gray solid;

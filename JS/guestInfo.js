@@ -56,6 +56,7 @@ else {  // 로그인 되어있을 경우만 실행
             const modal = document.querySelector('.modal');                         // 모달 전체 페이지
             const closeBtn = document.querySelector('#modalCloseBtn');
             const modalTitle = document.querySelector('#modalTitle');
+            const modalEtc = document.querySelector('#modalEtc');
             const modalImg = document.querySelector('#modalImg');
             const modaldescription = document.querySelector('#modaldescription');
 
@@ -79,7 +80,6 @@ else {  // 로그인 되어있을 경우만 실행
                     },
                     body: JSON.stringify({
                         "userId": localStorage.getItem('userId'),
-                        "historyId": localStorage.getItem('historyId'),
                         "contentId": index,
                         "isLike": flag,
                         "type": content
@@ -291,12 +291,14 @@ else {  // 로그인 되어있을 경우만 실행
                     if (contentFlag === 0) { // 영화일 때
                         if (targetElem.parentNode.parentNode.parentNode.classList.contains('likeContentTable')) {
                             modalTitle.innerHTML = data.body.data[0][targetElem.parentNode.dataset.content].title;
+                            modalEtc.innerHTML = data.body.data[0][targetElem.parentNode.dataset.content].etc;
                             modalImg.style.backgroundImage = "url(" + data.body.data[0][targetElem.parentNode.dataset.content].image + ")";
                             modaldescription.innerHTML = data.body.data[0][targetElem.parentNode.dataset.content].description;
                             modal.style.display = 'flex';
                         }
                         else if (targetElem.parentNode.parentNode.parentNode.classList.contains('hateContentTable')) {
                             modalTitle.innerHTML = data.body.data[1][targetElem.parentNode.dataset.content].title;
+                            modalEtc.innerHTML = data.body.data[1][targetElem.parentNode.dataset.content].etc;
                             modalImg.style.backgroundImage = "url(" + data.body.data[1][targetElem.parentNode.dataset.content].image + ")";
                             modaldescription.innerHTML = data.body.data[1][targetElem.parentNode.dataset.content].description;
                             modal.style.display = 'flex';
@@ -305,12 +307,14 @@ else {  // 로그인 되어있을 경우만 실행
                     else {  // 책일 때
                         if (targetElem.parentNode.parentNode.parentNode.classList.contains('likeContentTable')) {
                             modalTitle.innerHTML = data.body.data[2][targetElem.parentNode.dataset.content].title;
+                            modalEtc.innerHTML = data.body.data[2][targetElem.parentNode.dataset.content].etc;
                             modalImg.style.backgroundImage = "url(" + data.body.data[2][targetElem.parentNode.dataset.content].image + ")";
                             modaldescription.innerHTML = data.body.data[2][targetElem.parentNode.dataset.content].description;
                             modal.style.display = 'flex';
                         }
                         else if (targetElem.parentNode.parentNode.parentNode.classList.contains('hateContentTable')) {
                             modalTitle.innerHTML = data.body.data[3][targetElem.parentNode.dataset.content].title;
+                            modalEtc.innerHTML = data.body.data[3][targetElem.parentNode.dataset.content].etc;
                             modalImg.style.backgroundImage = "url(" + data.body.data[3][targetElem.parentNode.dataset.content].image + ")";
                             modaldescription.innerHTML = data.body.data[3][targetElem.parentNode.dataset.content].description;
                             modal.style.display = 'flex';

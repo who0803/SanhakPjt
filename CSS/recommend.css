@@ -26,7 +26,7 @@
 .header {
 
     display: grid;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
     height: 90px;
     border-bottom: 2px rgb(26, 188, 156) solid;
@@ -35,7 +35,7 @@
 
 .website-title {
     justify-self: center;
-    grid-column: 2 / 3;
+    grid-column: 3 / 5;
     color: rgb(26, 188, 156);
     font-size: 40px;
     cursor: pointer;
@@ -55,13 +55,14 @@
 
 /*회원정보*/
 #guest {
-    grid-column: 3 / 4;
+    grid-column: 6 / 7;
     justify-self: end;
     padding: 10px;
     color: white;
     background-color: rgb(50, 199, 169);
     font-size: 1rem;
     border-radius: 50px;
+    margin-right: 20px;
     cursor: pointer;
 }
 
