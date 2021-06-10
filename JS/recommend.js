@@ -271,7 +271,12 @@ else {  // 로그인 되어있을 경우만 실행
                 })
                     .then((response) => response.json())
                     .then((data) => { 
-                        console.log("api");
+                        if (flag) {
+                            console.log("좋아요 추가!");
+                        }
+                        else {
+                            console.log("싫어요 추가!");
+                        }
                     })
             }
 
@@ -291,7 +296,13 @@ else {  // 로그인 되어있을 경우만 실행
                 })
                     .then((response) => response.json())
                     .then((data) => { 
-                        console.log("del");
+                        if (flag) {
+                            console.log("좋아요 제거!");
+                        }
+                        else {
+                            console.log("싫어요 제거!");
+                        }
+                        
                     })
             }
 
